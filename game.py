@@ -17,5 +17,3 @@ while run:
 
 pygame.quit()
 
-#hej
-#tja
