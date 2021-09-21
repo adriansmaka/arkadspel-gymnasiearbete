@@ -1,3 +1,4 @@
+from typing import KeysView
 import pygame
 import os
 
@@ -6,18 +7,27 @@ pygame.init()
 width, height = 1100, 748
 fönster = pygame.display.set_mode((width, height))
 fps = 60
+vel = 5 
 vit = (255, 255, 255)
+
 karaktär = pygame.image.load(os.path.join('img', 'karaktär.png'))
 karaktär = pygame.transform.scale(karaktär, (95, 70))
 fiende = pygame.image.load(os.path.join('img', 'fiende_1.png'))
+fiende = pygame.transform.scale(fiende, (87, 50))
+
+
 
 def display_fönster():
     fönster.fill(vit)
-    fönster.blit(karaktär, (470, 500))
+    fönster.blit(karaktär, (490, 500))
+    fönster.blit(fiende, (490, 200))
     pygame.display.update()
     
 
 def main():
+    karaktär_spel = pygame.Rect((490, 500), (95, 70))
+    fiende_spel = pygame.Rect((490, 200), (87,50))
+
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -26,7 +36,11 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             
-        display_fönster()
+        keys_pressed = pygame.key.get_pressed()
+        if keys_pressed[pygame.K_a]:
+            karaktär_spel.x -= vel
+        
+        display_fönster(karaktär_spel)
 
 pygame.QUIT
 
