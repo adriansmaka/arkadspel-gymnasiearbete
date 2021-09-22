@@ -38,13 +38,17 @@ def main():
             
         keys_pressed = pygame.key.get_pressed()
 
+
+# Funkar ej än.
         if event.type == pygame.KEYDOWN:
             if event.key == ord('a'):
                 print('left')
             if event.key == ord('d'):
                 print('right')
-            if event.key == pygame.K_UP or event.key == ord('w'):
-                print('jump')
+            if event.key == ord('w'):
+                print('up')
+            if event.key == ord('w'):
+                print('down')
 
         if event.type == pygame.KEYUP:
             if event.key == ord('a'):
