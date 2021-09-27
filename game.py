@@ -10,14 +10,14 @@ fps = 60
 hastighet = 5 
 vit = (255, 255, 255)
 
-karaktär = pygame.image.load(os.path.join('img', 'ship_15x17.png'))
-karaktär = pygame.transform.scale(karaktär, (85, 80))
+karaktär_höjd, karaktär_bredd = 50, 40
+
+karaktär = pygame.image.load(os.path.join('img', 'ship.png'))
+karaktär_spel = pygame.transform.scale(karaktär, (karaktär_höjd, karaktär_bredd))
 fiende = pygame.image.load(os.path.join('img', 'enemy_1.png'))
-fiende = pygame.transform.scale(fiende, (87, 50))
+fiende_spel = pygame.transform.scale(fiende, (87, 50))
 
-
-
-def display_fönster(karaktär_spel):
+def display_fönster(karaktär_spel, fiende_spel):
     fönster.fill(vit)
     fönster.blit(karaktär, (490, 500))
     fönster.blit(fiende, (490, 200))
@@ -40,7 +40,7 @@ def main():
         if keys_pressed[pygame.K_a]:
             karaktär_spel.x -= hastighet
         
-        display_fönster(karaktär_spel)
+        display_fönster(karaktär_spel, fiende)
 
 pygame.QUIT
 
