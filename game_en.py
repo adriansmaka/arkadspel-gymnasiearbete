@@ -7,26 +7,25 @@ pygame.init()
 width, height = 1100, 748
 window = pygame.display.set_mode((width, height))
 fps = 60
-speed = 5 
+velocity = 5 
 white = (255, 255, 255)
 
-char = pygame.image.load(os.path.join('img', 'ship.png'))
-char = pygame.transform.scale(char, (85, 80))
-nme = pygame.image.load(os.path.join('img', 'enemy_1.png'))
-nme = pygame.transform.scale(nme, (87, 50))
+char_img = pygame.image.load(os.path.join('img', 'ship.png'))
+char = pygame.transform.scale(char_img, (50, 50))
 
+nme_img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
+nme = pygame.transform.scale(nme_img, (87, 50))
 
-
-def display_window(char_game):
+def display_window(char_game, nme_game):
     window.fill(white)
-    window.blit(char, (490, 500))
+    window.blit(char, (char.x, char.y))
     window.blit(nme, (490, 200))
     pygame.display.update()
-    
+    return char.x, char.y
 
 def main():
-    char_game = pygame.Rect((490, 500), (95, 70))
-    nme_game = pygame.Rect((490, 200), (87,50))
+    char_game = pygame.Rect((490, 500), (50, 50))
+    nme_game = pygame.Rect((490, 200), (87, 50))
 
     clock = pygame.time.Clock()
     run = True
@@ -36,29 +35,25 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             
-        keys_pressed = pygame.key.get_pressed()
+        #keys_pressed = pygame.key.get_pressed()
+        #if keys_pressed[pygame.K_a]:
+            #char_game.x -= velocity
 
 
-# Funkar ej än.
-        if event.type == pygame.KEYDOWN:
-            if event.key == ord('a'):
-                print('left')
-            if event.key == ord('d'):
-                print('right')
-            if event.key == ord('w'):
-                print('up')
-            if event.key == ord('w'):
-                print('down')
+        char.x = 490
+        char.y = 500
+        dx = 5
+        dy = 7
 
-        if event.type == pygame.KEYUP:
-            if event.key == ord('a'):
-                print('left stop')
-            if event.key == ord('d'):
-                print('right stop')
-            if event.key == ord('q'):
-                pygame.quit()
-        
-        display_window(char_game)
+        events = pygame.key.get_pressed()
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    char.x -= dx
+                if event.key == pygame.K_RIGHT:
+                    char.x += dx
+
+        display_window(char_game, nme_game)
 
 pygame.QUIT
 

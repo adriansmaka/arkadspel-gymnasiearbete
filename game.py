@@ -5,7 +5,7 @@ import os
 pygame.init()
 #width, height = 1280, 960
 width, height = 1100, 748
-fönster = pygame.display.set_mode((width, height))
+window = pygame.display.set_mode((width, height))
 fps = 60
 hastighet = 5 
 vit = (255, 255, 255)
@@ -25,7 +25,7 @@ def display_fönster(karaktär_spel, fiende_spel):
 
 def main():
     karaktär_spel = pygame.Rect((490, 500), (95, 70))
-    fiende_spel = pygame.Rect((490, 200), (87,50))
+    fiende_spel = pygame.Rect((490, 200), (87, 50))
 
     clock = pygame.time.Clock()
     run = True
@@ -39,7 +39,7 @@ def main():
         if keys_pressed[pygame.K_a]:
             karaktär_spel.x -= hastighet
         
-        display_fönster(karaktär_spel, fiende)
+        display_fönster(karaktär_spel, fiende_spel)
 
 pygame.QUIT
 
