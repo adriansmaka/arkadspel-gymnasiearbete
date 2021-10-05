@@ -5,10 +5,15 @@ import os
 pygame.init()
 #width, height = 1280, 960
 width, height = 1100, 748
+heightdiv= height / 2
 window = pygame.display.set_mode((width, height))
 fps = 60
 velocity = 4
 white = (255, 255, 255)
+black = (0, 0, 0)
+
+# x-kord, Y-kord, tjocklek, Höjden
+wall = pygame.Rect(0, 320, width, 5)
 
 char_img = pygame.image.load(os.path.join('img', 'ship.png'))
 char = pygame.transform.scale(char_img, (50, 50))
@@ -18,12 +23,13 @@ nme = pygame.transform.scale(nme_img, (87, 50))
 
 def display_window(char_game, nme_game):
     window.fill(white)
+    pygame.draw.rect(window, black, wall)
     window.blit(char, (char_game.x, char_game.y))
-    window.blit(nme, (490, 200))
+    window.blit(nme, (nme_game.x, nme_game.y))
     pygame.display.update()
 
 def char_movement(keys_pressed, char_game):
-        if keys_pressed[pygame.K_a]:
+        if keys_pressed[pygame.K_a] and char_game.x - velocity > 0:
             char_game.x -= velocity
         if keys_pressed[pygame.K_d]:
             char_game.x += velocity
@@ -32,10 +38,17 @@ def char_movement(keys_pressed, char_game):
         if keys_pressed[pygame.K_w]:
             char_game.y -= velocity
 
-def main():
-    char_game = pygame.Rect((490, 500), (50, 50))
-    nme_game = pygame.Rect((490, 200), (87, 50))
+#pygame.draw.rect(window, (255,0,0), wall)
 
+#if char_game >= width or char_game <= width or char_game >= heightdiv or char_game <= heightdiv:
+#    velocity = 0
+
+def main():
+    #starting position
+    char_game = pygame.Rect((490, 500), (50, 50))
+    nme_game = pygame.Rect((0, 10), (87, 50))
+    
+    #game run
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -45,22 +58,13 @@ def main():
                 run = False
             
     
-            
+        #char movement
         keys_pressed = pygame.key.get_pressed()
         char_movement(keys_pressed, char_game)
         
-        
-        
-        """ if keys_pressed[pygame.K_a]:
-            char_game.x -= velocity
-        if keys_pressed[pygame.K_d]:
-            char_game.x += velocity
-        if keys_pressed[pygame.K_s]:
-            char_game.y += velocity 
-        if keys_pressed[pygame.K_w]:
-            char_game.y -= velocity"""
+        #nme movement
+        nme_game.x += 1
 
-        
         if char_game.x >= 0:
             char_game.x ==  0
         if char_game.x <= 1100:
@@ -71,7 +75,7 @@ def main():
             char_game.y ==  748
 
         #color = (255,0,0)
-       # border = pygame.draw.rect(window, color, pygame.Rect(0, 0, 1100, 748), 1)
+        # border = pygame.draw.rect(window, color, pygame.Rect(0, 0, 1100, 748), 1)
         #pygame.display.flip()
 
         #if char_game.colliderect(border):
@@ -100,3 +104,5 @@ pygame.QUIT
 #if __name__ == "__main__":
 
 main()
+
+""" https://www.pygame.org/docs/ref/rect.html """
