@@ -106,17 +106,18 @@ def nme_movement(nme_game):
                 nme_game.x -= nme_v
                 nme_game.x -= nme_v
                 print("rad2")
-            if nme_game.x == 0 and nme_game.y > 0:
-                nme_game.x -= nme_v
-                nme_game.x -= nme_v
+            #if nme_game.x == 0:
+            
+                #nme_game.x -= nme_v
+                #nme_game.x -= nme_v
                 #nme_game.y += nme_v
                 print("rad3")
             #if nme_game.x == width - nme_w and nme_game.y == 0 + nme_h * 2:
                 #nme_game.x -= nme_v
                 #nme_game.x -= nme_v
                 #print("bumpbumpbumpbumpbumpbumpbumpbumpbump")
-        if nme_game == 1:
-            nme_game = nme_game - 1
+        #if nme_game == 1:
+            #nme_game = nme_game - 1
 
 
 
