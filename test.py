@@ -73,19 +73,19 @@ def nme_movement(nme_game):
             if nme_game.x > width-nme_w:
                 nme_game.x = width-nme_w
                 nme_game.y += nme_velocity
+                print("111")
             if nme_game.y == 0+nme_h:
                 nme_game.x -= nme_velocity
                 nme_game.x -= nme_velocity
+                print("222")
             if nme_game.x == 0:
                 nme_game.y += nme_velocity
                 nme_game.x += nme_velocity
-        else:
-            
-            """             nme_game.x, nme_game.y == nme_velocity
-            if nme_game.x == 0:
                 nme_game.x += nme_velocity
-            if nme_game.x == width:
-                nme_game.x -= nme_velocity """
+                print("333")
+        else:
+            if nme_game == 1:
+                nme_game = 0
 
 
 
@@ -114,6 +114,7 @@ def main():
         #char movement
         keys_pressed = pygame.key.get_pressed()
         char_movement(keys_pressed, char_game)
+        
         nme_movement(nme_game)
         #if nme_game.y < nme_border_h:
         #    nme_movement(nme_game)
