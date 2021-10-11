@@ -8,7 +8,7 @@ width, height = 1100, 740
 window = pygame.display.set_mode((width, height))
 fps = 60
 char_velocity = 10
-nme_v = 10
+nme_v = 5
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
@@ -97,30 +97,27 @@ def nme_movement(nme_game):
         #nme movement
         #Ta bort ej
         if nme_game.y < nme_border_h:
-            if nme_game.x > 0 and nme_game.x < width-nme_w and nme_game.y == 0:
-                nme_game.x += nme_v
-                #nme_game.x = width-nme_w
-                #print("rad1")
 
-            if nme_game.x == width-nme_w:
+            #Right start
+            if nme_game.x >= 0 and nme_game.x < width - nme_w and nme_game.y == 0:
+                nme_game.x += nme_v
+
+            #Right stop, down start
+            if nme_game.x == width-nme_w and nme_game.y >= 0 and nme_game.y < nme_h:
                 nme_game.y += nme_v
 
-            #if nme_game.y == nme_h:
-                #nme_game.x -= nme_v
-                #nme_game.x -= nme_v
-                #print("rad2")
-
-            #if nme_game.x == 0 and nme_game.y == nme_h:
-                #nme_game.y += nme_v
-                #nme_game.x = 0 + nme_w
-                #nme_game.y = nme_h
+            #Down stop, left start
+            if nme_game.y == nme_h:
+                nme_game.x -= nme_v
                 
-            #if nme_game.x == 0:
+
+                
+            #if nme_game.x == 0 and nme_game.y == 0:
             
                 #nme_game.x -= nme_v
                 #nme_game.x -= nme_v
                 #nme_game.y += nme_v
-                print("rad3")
+                #print("rad3")
             #if nme_game.x == width - nme_w and nme_game.y == 0 + nme_h * 2:
                 #nme_game.x -= nme_v
                 #nme_game.x -= nme_v
