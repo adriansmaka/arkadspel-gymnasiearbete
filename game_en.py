@@ -138,15 +138,21 @@ def char_movement(keys_pressed, char_game):
             #if pygame.Rect.colliderect(char_game, char_border_h):
                 #print("Crash!")
 
-
-
 def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
-        if nme_game.x >= 0 and nme_game.x <= width - nme_w:
-            nme_game.x == width - nme_w
-            nme_game.x += nme_v
-        if nme_game.x == width - nme_w:
-            nme_game.y += nme_v
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 0:
+                nme_game.x += nme_v
+            if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
+                nme_game.y += nme_v
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h:
+                nme_game.x -= nme_v
+            if nme_game.x == 0 and nme_game.y >= nme_h and nme_game.y <= nme_h * 2:
+                nme_game.y += nme_v
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * 2:
+                nme_game.x += nme_v
+        #if nme_game.x >= 0 and nme_game.x < width - nme_w and nme_game.y == nme_h:
+            #nme_game.x += nme_v
+
         #if nme_game.x == width - nme_w and nme_game.y > nme_h:
             #nme_game.y == nme_h
         
