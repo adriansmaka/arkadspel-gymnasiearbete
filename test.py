@@ -28,7 +28,7 @@ char = pygame.transform.scale(char_img, (char_w, char_h))
 
 nme_x, nme_y = 0, 0
 nme_w, nme_h = 70, 30
-nme_img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
+nme_img = pygame.image.load(os.path.join('img', 'nme_rect.png'))
 nme = pygame.transform.scale(nme_img, (nme_w, nme_h))
 nme_border_h = char_border_h - nme_h - 30
 
@@ -143,10 +143,10 @@ def char_movement(keys_pressed, char_game):
 def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
         if nme_game.x >= 0 and nme_game.x <= width - nme_w:
+            nme_game.x == width - nme_w
             nme_game.x += nme_v
-        #if nme_game.x == width - nme_w and nme_game.y >= 0:
-            #nme_game.x == width - nme_w
-            #nme_game.y += nme_v
+        if nme_game.x == width - nme_w:
+            nme_game.y += nme_v
         #if nme_game.x == width - nme_w and nme_game.y > nme_h:
             #nme_game.y == nme_h
         
