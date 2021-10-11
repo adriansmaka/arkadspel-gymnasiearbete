@@ -97,15 +97,24 @@ def nme_movement(nme_game):
         #nme movement
         #Ta bort ej
         if nme_game.y < nme_border_h:
-            nme_game.x += nme_v
-            if nme_game.x > width-nme_w:
-                nme_game.x = width-nme_w
+            if nme_game.x > 0 and nme_game.x < width-nme_w and nme_game.y == 0:
+                nme_game.x += nme_v
+                #nme_game.x = width-nme_w
+                #print("rad1")
+
+            if nme_game.x == width-nme_w:
                 nme_game.y += nme_v
-                print("rad1")
-            if nme_game.y == nme_h:
-                nme_game.x -= nme_v
-                nme_game.x -= nme_v
-                print("rad2")
+
+            #if nme_game.y == nme_h:
+                #nme_game.x -= nme_v
+                #nme_game.x -= nme_v
+                #print("rad2")
+
+            #if nme_game.x == 0 and nme_game.y == nme_h:
+                #nme_game.y += nme_v
+                #nme_game.x = 0 + nme_w
+                #nme_game.y = nme_h
+                
             #if nme_game.x == 0:
             
                 #nme_game.x -= nme_v
