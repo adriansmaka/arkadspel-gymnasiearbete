@@ -8,14 +8,13 @@ width, height = 1100, 740
 window = pygame.display.set_mode((width, height))
 fps = 60
 char_velocity = 10
-nme_v = 5
+nme_v = 10
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
-
-
+nme_n = 1
 
 char_border_h = int(height * 0.4)
 # x-kord, y-kord, width, height
@@ -27,11 +26,11 @@ char_x, char_y = 0, 0
 char_img = pygame.image.load(os.path.join('img', 'ship.png'))
 char = pygame.transform.scale(char_img, (char_w, char_h))
 
-nme_x, nme_y = 250, 0
+nme_x, nme_y = 0, 0
 nme_w, nme_h = 70, 30
 nme_img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
 nme = pygame.transform.scale(nme_img, (nme_w, nme_h))
-nme_border_h = char_border_h - nme_h - 10
+nme_border_h = char_border_h - nme_h - 30
 
 def wall_create():
     numwall = int(height / nme_h)
@@ -93,23 +92,29 @@ def char_movement(keys_pressed, char_game):
         if char_game.y < char_border_h:
             char_game.y = char_border_h
 
-def nme_movement(nme_game):
+#def nme_movement(nme_game):
         #nme movement
         #Ta bort ej
-        if nme_game.y < nme_border_h:
+            
+        #for i in range(nme_n):
 
-            #Right start
-            if nme_game.x >= 0 and nme_game.x < width - nme_w and nme_game.y == 0:
-                nme_game.x += nme_v
+            #if nme_game.y < nme_border_h:
 
-            #Right stop, down start
-            if nme_game.x == width-nme_w and nme_game.y >= 0 and nme_game.y < nme_h:
-                nme_game.y += nme_v
+                #Right start
+                #if nme_game.x == 0 and nme_game.x < width - nme_w and nme_game.y == 0:
+                    #nme_game.x += nme_v
 
-            #Down stop, left start
-            if nme_game.y == nme_h:
-                nme_game.x -= nme_v
-                
+                #Right stop, down start
+                #if nme_game.x == width-nme_w and nme_game.y >= 0 and nme_game.y < nme_h:
+                    #nme_game.y += nme_v
+
+                #Down stop, left start
+                #if nme_game.y == nme_h:
+                    #nme_game.x -= nme_v
+
+                #if nme_game.x >= 0 and nme_game.y == nme:
+                    #nme_game.x += nme_v
+                    
 
                 
             #if nme_game.x == 0 and nme_game.y == 0:
@@ -133,6 +138,21 @@ def nme_movement(nme_game):
             #if pygame.Rect.colliderect(char_game, char_border_h):
                 #print("Crash!")
 
+
+
+def nme_movement(nme_game):
+    if nme_game.y < nme_border_h:
+        if nme_game.x >= 0 and nme_game.x <= width - nme_w:
+            nme_game.x += nme_v
+        #if nme_game.x == width - nme_w and nme_game.y >= 0:
+            #nme_game.x == width - nme_w
+            #nme_game.y += nme_v
+        #if nme_game.x == width - nme_w and nme_game.y > nme_h:
+            #nme_game.y == nme_h
+        
+        #if nme_game.x == width - nme_w and nme_game.y == 0 + nme_h:
+
+
 def main():
     #starting position, (x, y), (w, h)
     char_game = pygame.Rect((char_x, char_y), (char_w, char_h))
@@ -147,7 +167,7 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
             
-    
+
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
