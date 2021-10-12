@@ -94,22 +94,27 @@ def char_movement(keys_pressed, char_game):
 
 def nme_movement(nme_game):
     if nme_game.y <= nme_border_h:
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 0:
+        for n in range(1, 10):
+            print(n)
+            if nme_game.x >= n - n and nme_game.x <= width - nme_w and nme_game.y == n - n:
                 nme_game.x += nme_v
-            if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y < nme_h:
+            if nme_game.x == width - nme_w and nme_game.y >= n and nme_game.y < nme_h * n:
                 nme_game.y += nme_v
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h:
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h * n:
                 nme_game.x -= nme_v
-            if nme_game.x == 0 and nme_game.y >= nme_h and nme_game.y < nme_border_h: #and nme_game.y <= nme_h * 2:
+            if nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y < nme_border_h * n and nme_game.y <= nme_h * n:
                 nme_game.y += nme_v
-            #if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * 2:
-                #nme_game.x += nme_v
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n:
+                nme_game.x += nme_v
 
-    elif nme_game.y >= nme_border_h:
-            if nme_game.x <= width:
-                nme_game.x += nme_v
-            if nme_game.x <= width - nme_w:
-                nme_game.x -= nme_v
+    #elif nme_game.y >= nme_border_h:
+        #direction = nme_v
+        #direction = -10
+        #nme_game.x += direction
+        
+
+
+                
 
 """ 
         enemyX[i] += enemyX_change[i]
@@ -156,7 +161,7 @@ def main():
 
         keys_pressed = pygame.key.get_pressed()
         char_movement(keys_pressed, char_game)
-        nme_movement(nme_game)
+        nme_movement(nme_game) 
 
         display_window(char_game, nme_game)
 
