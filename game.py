@@ -29,7 +29,7 @@ nme_x, nme_y = 0, 0
 nme_w, nme_h = 70, 30
 nme_img = pygame.image.load(os.path.join('img', 'nme_rect.png'))
 nme = pygame.transform.scale(nme_img, (nme_w, nme_h))
-nme_border_h = char_border_h - nme_h - 30
+nme_border_h = char_border_h - nme_h * 2
 
 def wall_create():
     numwall = int(height / nme_h)
@@ -48,6 +48,8 @@ wall9 = pygame.Rect(0, 0, width, nme_h * 8)
 wall10 = pygame.Rect(0, 0, width, nme_h * 9)
 wall11 = pygame.Rect(0, 0, width, nme_h * 10)
 wall12 = pygame.Rect(0, 0, width, nme_h * 11)
+wallcollide = pygame.Rect(width - 20, nme_border_h - 20, -10, 10)
+
 
 def display_window(char_game, nme_game):
     window.fill(white)
@@ -63,6 +65,7 @@ def display_window(char_game, nme_game):
     pygame.draw.rect(window, red, wall3)
     pygame.draw.rect(window, green, wall2)
     pygame.draw.rect(window, blue, wall)
+    pygame.draw.rect(window, black, wallcollide)
     window.blit(char, (char_game.x, char_game.y))
     window.blit(nme, (nme_game.x, nme_game.y))
     pygame.display.update()
@@ -90,17 +93,49 @@ def char_movement(keys_pressed, char_game):
 
 
 def nme_movement(nme_game):
-    if nme_game.y < nme_border_h:
+    if nme_game.y <= nme_border_h:
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 0:
                 nme_game.x += nme_v
-            if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
+            if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y < nme_h:
                 nme_game.y += nme_v
             if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h:
                 nme_game.x -= nme_v
-            if nme_game.x == 0 and nme_game.y >= nme_h and nme_game.y <= nme_h * 2:
+            if nme_game.x == 0 and nme_game.y >= nme_h and nme_game.y < nme_border_h: #and nme_game.y <= nme_h * 2:
                 nme_game.y += nme_v
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * 2:
+            #if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * 2:
+                #nme_game.x += nme_v
+
+    elif nme_game.y >= nme_border_h:
+            if nme_game.x <= width:
                 nme_game.x += nme_v
+            if nme_game.x <= width - nme_w:
+                nme_game.x -= nme_v
+
+""" 
+        enemyX[i] += enemyX_change[i]
+        if enemyX[i] <= 0:
+            enemyX_change[i] = 4
+            enemyY[i] += enemyY_change[i]
+        elif enemyX[i] >= 736:
+            enemyX_change[i] = -4
+            enemyY[i] += enemyY_change[i]
+
+"""
+
+""" 
+num_of_enemies = 6
+
+for i in range(num_of_enemies):
+    enemyImg.append(pygame.image.load('enemy.png'))
+    enemyX.append(random.randint(0, 736))
+    enemyY.append(random.randint(50, 150))
+    enemyX_change.append(4)
+    enemyY_change.append(40)
+"""
+
+
+                #if nme_game.x == width - nme_w:
+                        #nme_game.x += nme_v
 
 
 
