@@ -92,7 +92,8 @@ def char_movement(keys_pressed, char_game):
 def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
         times = 3
-        for x in range(10):
+        clears = 0
+        while clears < 10:
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 0:
                 nme_game.x += nme_v
             if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
@@ -103,6 +104,8 @@ def nme_movement(nme_game):
                 nme_game.y += nme_v
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * 2:
                 nme_game.x += nme_v
+                clears += 1
+
 
 
 
