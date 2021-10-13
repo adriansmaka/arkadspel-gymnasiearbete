@@ -95,17 +95,22 @@ def char_movement(keys_pressed, char_game):
 def nme_movement(nme_game):
     if nme_game.y <= nme_border_h:
         for n in range(1, 10):
-            print(n)
-            if nme_game.x >= n - n and nme_game.x <= width - nme_w and nme_game.y == n - n:
-                nme_game.x += nme_v
-            if nme_game.x == width - nme_w and nme_game.y >= n and nme_game.y < nme_h * n:
-                nme_game.y += nme_v
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h * n:
-                nme_game.x -= nme_v
-            if nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y < nme_border_h * n and nme_game.y <= nme_h * n:
-                nme_game.y += nme_v
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n:
-                nme_game.x += nme_v
+            #for h in range(1, 9, n):
+                #Right start
+                if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
+                    nme_game.x += nme_v
+                #Right stop, down start
+                if nme_game.x == width - nme_w and nme_game.y >= nme_h * n - nme_h and nme_game.y < nme_h * n:
+                    nme_game.y += nme_v
+                #Down stop, left start
+                if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h * n:
+                    nme_game.x -= nme_v
+                #Left stop, down start
+                if nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n * 2:
+                    nme_game.y += nme_v
+                #Down stop, right start
+                #if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n:
+                    #nme_game.x += nme_v
 
     #elif nme_game.y >= nme_border_h:
         #direction = nme_v
