@@ -93,32 +93,17 @@ def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
         clears = 0
         n = 1
-        while clears < 4:
-            #Right start
+        while clears < 10:
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
                 nme_game.x += nme_v
-                print("Stage one", clears)
-                print("Stage one", n)
-    
-            #Right stop, down start
             if nme_game.x == width - nme_w and nme_game.y >= nme_h * n - nme_h and nme_game.y <= nme_h * n:
                 nme_game.y += nme_v
-                print("Stage two", clears)
-                print("Stage two", n)
-
-            #Down stop, left start
             if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h * n:
                 nme_game.x -= nme_v
-                print("Stage three", clears)
-                print("Stage three", n)
-
-            #Left stop, down start
             if nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n * 2:
                 nme_game.y += nme_v
-                print("Stage four", clears)
-                print("Stage four", n)
-                clears += 1
-                n += 1
+            clears += 1
+            n += 1
             break
         else:
             ("failed")
