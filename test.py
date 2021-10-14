@@ -1,8 +1,9 @@
+
 clears = 0
 n = 0
-while clears < 10:
+while clears < 5:
     #Add break
-    print ("hello")
+    clears += 1
+    print ("Clears is:", clears)
+    
     #break
-else:
-    print("fail")
