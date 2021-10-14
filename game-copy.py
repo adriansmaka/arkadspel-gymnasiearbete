@@ -94,6 +94,10 @@ def nme_movement(nme_game):
         clears = 0
         n = 1
         while clears < 4:
+            if nme_game.x >= 0 and nme_game.y == 60:
+                clears += 1
+                n += 1
+
             #Right start
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
                 nme_game.x += nme_v
@@ -117,16 +121,8 @@ def nme_movement(nme_game):
                 nme_game.y += nme_v
                 print("Stage five clears", clears)
                 print("Stage five n", n)
+                print(nme_game.x)
                 print(nme_game.y)
-
-            if nme_game.x == 0 and nme_game.y == nme_h * n:
-                clears += 1
-                n += 1
-
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n: #Change 60 for var
-                nme_game.x += nme_v
-                print("Stage six clears", clears)
-                print("Stage six n", n)
             break
 
 
