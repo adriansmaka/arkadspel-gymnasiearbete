@@ -99,7 +99,7 @@ def nme_movement(nme_game):
                 nme_game.x += nme_v
                 print("Stage one clears", clears)
                 print("Stage one n", n)
-    
+
             #Right stop, down start
             if nme_game.x == width - nme_w and nme_game.y >= nme_h * n - nme_h and nme_game.y <= nme_h * n:
                 nme_game.y += nme_v
@@ -114,21 +114,25 @@ def nme_movement(nme_game):
 
             #Left stop, down start
             if nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y < nme_h * n * 2:
-                if nme_game.x == 0 and nme_game.y == nme_h * n:
-                    clears += 1
-                    n += 1
-                    print("Stage four clears", clears)
-                    print("Stage four n", n)
                 nme_game.y += nme_v
                 print("Stage five clears", clears)
                 print("Stage five n", n)
                 print(nme_game.y)
+
+            if nme_game.x >= 0 and nme_game.y == nme_h * n * 2:
+                print("Inloop clears:", clears)
+                print("Inloop n:", n)
+                clears += 1
+                n += 1
+                print("2 Inloop clears:", clears)
+                print("2 Inloop n:", n)
+
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n:
+                nme_game.x += nme_v
+                print("2 Stage one clears", clears)
+                print("2 Stage one n", n)
+
             break
-            
-
-
-                
-
 
 
 

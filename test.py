@@ -1,9 +1,4 @@
+#t = 30
 
-clears = 0
-n = 0
-while clears < 5:
-    #Add break
-    clears += 1
-    print ("Clears is:", clears)
-    
-    #break
+for t in range(120):
+    print(t%30)
