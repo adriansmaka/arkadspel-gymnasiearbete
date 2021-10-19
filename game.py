@@ -103,15 +103,14 @@ def nme_movement(nme_game):
             if nme_game.x <= width - nme_w and nme_game.y > 30:
                 nleft += 2
 
+
             #Right start
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
                 nme_game.x += nme_v
-                #print("Stage one clears", clears)
-                #print("Stage one n", n)
+            
             #Down stop, left start
             elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == 30 * nleft:
                 nme_game.x -= nme_v
-                #print("nleft2 is       ", nleft)
                 
             elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n * 2:
                 nme_game.x += nme_v
@@ -119,24 +118,14 @@ def nme_movement(nme_game):
             #Right stop, down start
             if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
                 nme_game.y += nme_v
-                #print("Stage two clears", clears)
-                #print("Stage two n", n)
-                #print("Fel loop")
+
             #Left stop, down start
             elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n * 2:
                 nme_game.y += nme_v
-                #print("Stage five clears", clears)
-                #print("Stage five n", n)
-                #print(nme_game.x)
-                #print(nme_game.y)
+
             elif nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n * 2:
                 print("n är___________", n)
                 nme_game.y += nme_v
-                #print("Stage six clears", clears)
-                #print("Stage six n", n)
-                #print("Stage six nleft", nleft)
-                #print(nme_game.x)
-                #print(nme_game.y)
             break
 
 
