@@ -93,45 +93,52 @@ def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
         clears = 0
         n = 1
+        nleft = 0
         while clears < 4:
+            #print(nme_game)
+            if nme_game.x == 0 and nme_game.y > nme_h * n * 2:
+                clears += 1
+                n += 1
+            if nme_game.x == width - nme_w  and nme_game.y > 30:
+                nleft += 60
+
             #Right start
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
                 nme_game.x += nme_v
-                print("Stage one clears", clears)
-                print("Stage one n", n)
-
-            #Right stop, down start
-            if nme_game.x == width - nme_w and nme_game.y >= nme_h * n - nme_h and nme_game.y <= nme_h * n:
-                nme_game.y += nme_v
-                print("Stage two clears", clears)
-                print("Stage two n", n)
-
+                #print("Stage one clears", clears)
+                #print("Stage one n", n)
             #Down stop, left start
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h * n:
+            elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == 30 + nleft:
                 nme_game.x -= nme_v
                 print("Stage three clears", clears)
                 print("Stage three n", n)
-
-            #Left stop, down start
-            if nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y < nme_h * n * 2:
-                nme_game.y += nme_v
-                print("Stage five clears", clears)
-                print("Stage five n", n)
-                print(nme_game.y)
-
-            if nme_game.x >= 0 and nme_game.y == nme_h * n * 2:
-                print("Inloop clears:", clears)
-                print("Inloop n:", n)
-                clears += 1
-                n += 1
-                print("2 Inloop clears:", clears)
-                print("2 Inloop n:", n)
-
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n:
+                print("Stage three nleft", nleft)
+                
+            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n * 2:
                 nme_game.x += nme_v
-                print("2 Stage one clears", clears)
-                print("2 Stage one n", n)
-
+    
+            #Right stop, down start
+            if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
+                nme_game.y += nme_v
+                #print("Stage two clears", clears)
+                #print("Stage two n", n)
+                #print("Fel loop")
+            #Left stop, down start
+            elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n * 2:
+                nme_game.y += nme_v
+                #print("Stage five clears", clears)
+                #print("Stage five n", n)
+                #print(nme_game.x)
+                #print(nme_game.y)
+            elif nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <  nme_h * n * 3:
+                nme_game.y += nme_v
+                print("Stage six clears", clears)
+                print("Stage six n", n)
+                print("Stage six nleft", nleft)
+                print(nme_game.x)
+                print(nme_game.y)
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == 90:
+                nme_game.x -= nme_v
             break
 
 
