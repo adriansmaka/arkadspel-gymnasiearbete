@@ -97,10 +97,9 @@ def nme_movement(nme_game):
         while clears < 4:
             if clears > 0 or n > 2:
                 print("Fixed!!!!!!!!!!!!")
-            if nme_game.x == 0 and nme_game.y > 60:
-                clears += 1
+            if nme_game.x <= width - nme_w and nme_game.y > 80:
                 n += 2
-                print("n är", n)
+                #print("n är", n)
             if nme_game.x <= width - nme_w and nme_game.y > 30:
                 nleft += 2
 
@@ -121,14 +120,16 @@ def nme_movement(nme_game):
             if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
                 nme_game.y += nme_v
 
-            #Left stop, down start
             elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
                 nme_game.y += nme_v
+                print("n is", n)
 
-            elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
-                nme_game.y += nme_v
+            #Left stop, down start
 
             elif nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
+                nme_game.y += nme_v
+
+            elif nme_game.x == width - nme_w and nme_game.y >= nme_h * n * 2 and nme_game.y <= nme_h * n * 2 + nme_h:
                 nme_game.y += nme_v
             break
 
