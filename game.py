@@ -98,8 +98,8 @@ def nme_movement(nme_game):
         while clears < 4:
             if clears > 0 or n > 2:
                 print("Fixed!!!!!!!!!!!!")
-            if nme_game.x == 0 and nme_game.y > 60 or nme_game.x == width - nme_w and nme_game.y > 60:
-                for i in range(2):    
+            for i in range(2):
+                if nme_game.x == 0 and nme_game.y > 60 or nme_game.x == width - nme_w and nme_game.y > 60:    
                     n += 1
                     print("n is", n)
             if nme_game.x <= width - nme_w and nme_game.y > 30:
