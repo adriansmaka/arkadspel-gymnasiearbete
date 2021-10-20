@@ -92,30 +92,29 @@ def char_movement(keys_pressed, char_game):
 def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
         clears = 0
-        n = 1
         dirleft = 1
-        test = 0
         while clears < 4:
-            if clears > 0 or n > 2:
-                print("Fixed!!!!!!!!!!!!")
-            for i in range(2):
-                if nme_game.x == 0 and nme_game.y > 60 or nme_game.x == width - nme_w and nme_game.y > 60:    
+            n = 1
+            clears = n
+            if nme_game.x == width - nme_w and nme_game.y == 30 * n:
+                while n < 4:
                     n += 1
                     print("n is", n)
+                break
             if nme_game.x <= width - nme_w and nme_game.y > 30:
                 dirleft += 2
+                #print("dirleft is", dirleft)
 
 
-            #Right start
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
                 nme_game.x += nme_v
-            #Down stop, left start
+
             elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == 30 * dirleft:
                 nme_game.x -= nme_v
                 
             elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n * 2:
                 nme_game.x += nme_v
-    
+
 
 
             #Right stop, down start
