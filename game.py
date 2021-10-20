@@ -97,7 +97,7 @@ def nme_movement(nme_game):
             n = 0
             clears = n
             if nme_game.x == 0 and nme_game.y == 30 * n or nme_game.x == width - nme_w and nme_game.y == nme_h * n:
-                n += 2
+                n += 1
                 print("n is", n)
             elif nme_game.x == 0 and nme_game.y > 30 * n or nme_game.x == width - nme_w and nme_game.y > nme_h * n:
                 n += 1
