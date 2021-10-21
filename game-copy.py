@@ -92,41 +92,43 @@ def char_movement(keys_pressed, char_game):
 def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
         clears = 0
-        n = 1
-        nleft = 1
+        dirleft = 1
         while clears < 4:
-            if clears > 0 or n > 2:
-                print("Fixed!!!!!!!!!!!!")
-            if nme_game.x <= width - nme_w and nme_game.y >= 60:
-                n += 2
-                #print("n är", n)
-            if nme_game.x <= width - nme_w and nme_game.y > 30:
-                nleft += 2
+            n = 0
+            clears = n
 
+            if nme_game.x <= width - nme_w and nme_game.y > nme_h:
+                dirleft += 2
 
-            #Right start
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
+#----------- Height update -----------
+
+            while nme_game.x == 0 and nme_game.y >= 30 or nme_game.x == width - nme_w and nme_game.y > 30:
+                n += 1
+                print("n is", n)
+            else:
+                print("n not updated")
+
+#----------- X axis movement -----------
+
+            #Start right when y == 0
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 0:
                 nme_game.x += nme_v
-            #Down stop, left start
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h * nleft:
+
+            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n:
+                #print("n1 is", n)
+                nme_game.x += nme_v
+
+            elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h:
                 nme_game.x -= nme_v
-                
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n * 2:
-                nme_game.x += nme_v
-    
 
+#----------- Y axis movement -----------
 
-            #Right stop, down start
-            if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
+            if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
                 nme_game.y += nme_v
 
-            elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y < 120:
+            elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
                 nme_game.y += nme_v
 
-            elif nme_game.x == width - nme_w and nme_game.y >= nme_h * n - nme_h and nme_game.y <= nme_h * n:
-                nme_game.y += nme_v
-            if nme_game.x == width - nme_w or nme_game.x == 0:
-                print(n)
             break
 
 
