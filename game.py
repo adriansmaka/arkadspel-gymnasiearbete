@@ -94,14 +94,11 @@ def nme_movement(nme_game):
         clears = 0
         dirleft = 1
         while clears < 4:
-            n = 0
+            n = 1
             clears = n
-            if nme_game.x == 0 and nme_game.y == 30 * n or nme_game.x == width - nme_w and nme_game.y == nme_h * n:
+            if nme_game.x == 0 and nme_game.y == nme_h * n or nme_game.x == width - nme_w and nme_game.y == nme_h * n:
                 n += 1
                 print("n is", n)
-            elif nme_game.x == 0 and nme_game.y > 30 * n or nme_game.x == width - nme_w and nme_game.y > nme_h * n:
-                n += 1
-                print("n2 is", n)
 
             if nme_game.x <= width - nme_w and nme_game.y > 30:
                 dirleft += 2
@@ -110,11 +107,8 @@ def nme_movement(nme_game):
 
             if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n - nme_h:
                 nme_game.x += nme_v
-                
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n * 2:
-                nme_game.x += nme_v
 
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == 30 * dirleft:
+            elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h * dirleft:
                 nme_game.x -= nme_v
 
 
