@@ -1,4 +1,3 @@
-nleft = 1
-print(nleft)
-nleft += 2
-print(nleft)
+n = 3
+t = n % 2
+print(t)
