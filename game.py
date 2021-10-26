@@ -92,34 +92,28 @@ def char_movement(keys_pressed, char_game):
 def nme_movement(nme_game):
     if nme_game.y < nme_border_h:
         clears = 0
-        dirleft = 1
-        while clears < 4:
-            n = 1
+        while clears < 6:
+            n = 0
             clears = n
 
-            if nme_game.x <= width - nme_w and nme_game.y > nme_h:
-                dirleft += 2
+#----------- Height update -----------
 
-            if nme_game.x == 0 and nme_game.y == nme_h * n + 10 or nme_game.x == width - nme_w and nme_game.y == nme_h * n + nme_h:
-                n += 1
+            while n < 6:
+                n = nme_game.y / nme_h
                 print("n is", n)
+                break
 
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 0:
+#----------- X axis movement -----------
+
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 <= 0:
                 nme_game.x += nme_v
 
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == nme_h * n + nme_h:
-                #print("n1 is", n)
-                nme_game.x += nme_v
-
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w  and nme_game.y == nme_h:
+            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 == 1:
                 nme_game.x -= nme_v
 
+#----------- Y axis movement -----------
 
-            if nme_game.x == width - nme_w and nme_game.y >= 0 and nme_game.y <= nme_h:
-                nme_game.y += nme_v
-
-            elif nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
-                #print("n2 is", n)
+            if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
                 nme_game.y += nme_v
 
             elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
@@ -134,7 +128,7 @@ def main():
     char_game = pygame.Rect((char_x, char_y), (char_w, char_h))
     nme_game = pygame.Rect((nme_x, nme_y), (nme_w, nme_h))
 
-    #game run
+#----------- Game run -----------
     clock = pygame.time.Clock()
     run = True
     while run:
