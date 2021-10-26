@@ -1,3 +1,3 @@
-n = 3
-t = n % 2
+n = 30
+t = int(n/30)
 print(t)

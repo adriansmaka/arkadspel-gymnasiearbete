@@ -100,28 +100,16 @@ def nme_movement(nme_game):
 #----------- Height update -----------
 
             while n < 6:
-                n = int(nme_game.y / nme_h)
+                n = nme_game.y / nme_h
                 print("n is", n)
                 break
 
 #----------- X axis movement -----------
 
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 0:
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 <= 0:
                 nme_game.x += nme_v
 
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 60:
-                nme_game.x += nme_v
-
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 120:
-                nme_game.x += nme_v
-
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 30:
-                nme_game.x -= nme_v
-
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 90:
-                nme_game.x -= nme_v
-
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and nme_game.y == 150:
+            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 == 1:
                 nme_game.x -= nme_v
 
 #----------- Y axis movement -----------
