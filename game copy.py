@@ -57,7 +57,7 @@ def nme_movement(nme_game):
 
 def main():
     #starting position, (x, y), (w, h)
-    nme_game = pygame.Rect((nme_x, nme_y), (nme_w, nme_h))
+    nme_game = pygame.Rect((nme_x, 240), (nme_w, nme_h))
 
 #----------- Game run -----------
     clock = pygame.time.Clock()
