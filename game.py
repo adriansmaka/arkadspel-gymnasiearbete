@@ -1,4 +1,3 @@
-from typing import KeysView
 import pygame
 import os
 
@@ -7,8 +6,6 @@ pygame.init()
 width, height = 1100, 740
 window = pygame.display.set_mode((width, height))
 fps = 60
-char_velocity = 10
-nme_v = 10
 white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
@@ -69,14 +66,15 @@ def display_window(char_game, nme_game):
 
 def char_movement(keys_pressed, char_game):
     #char movement
+        char_v = 10
         if keys_pressed[pygame.K_a]:
-            char_game.x -= char_velocity
+            char_game.x -= char_v
         if keys_pressed[pygame.K_d]:
-            char_game.x += char_velocity
+            char_game.x += char_v
         if keys_pressed[pygame.K_s]:
-            char_game.y += char_velocity 
+            char_game.y += char_v 
         if keys_pressed[pygame.K_w]:
-            char_game.y -= char_velocity
+            char_game.y -= char_v
     #char border
         if char_game.x < 0:
             char_game.x = 0
@@ -90,17 +88,16 @@ def char_movement(keys_pressed, char_game):
 
 
 def nme_movement(nme_game):
+    nme_v = 10
     if nme_game.y < nme_border_h:
         clears = 0
-        while clears < 6:
+        while clears == 0:
             n = 0
-            clears = n
 
 #----------- Height update -----------
 
             while n < 6:
                 n = nme_game.y / nme_h
-                print("n is", n)
                 break
 
 #----------- X axis movement -----------
@@ -120,6 +117,14 @@ def nme_movement(nme_game):
                 nme_game.y += nme_v
 
             break
+
+    else:
+        if nme_game.x >= 0 and nme_game.x <= width - nme_w:
+            nme_game.x += nme_v
+        else:
+            nme_v = nme_v * -1
+
+
 
 
 
