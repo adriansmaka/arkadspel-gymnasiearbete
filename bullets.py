@@ -135,6 +135,9 @@ def powerup(keys_pressed, char_game, char_game_bullet):
     #    nme_game_bullet = USEREVENT +1
     #    pygame.time.set_timer(nme_game_bullet, 500)
 
+#nme_game_bullet = USEREVENT +1
+#pygame.time.set_timer(nme_game_bullet, 500)
+
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
     for bullet in char_game_bullet:
         bullet.y -= bullet_velocity
@@ -154,6 +157,15 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
             nme_game_bullet.remove(bullet)
             global lives
             lives -= 1
+
+def nme_shooting(nme_game, nme_game_bullet, event_list):
+    for event in event_list:
+        if event.type == nme_game_bullet_event:
+            bullet = pygame.Rect(nme_game.x + nme_game.width / 2.2 + 1, nme_game.y, 5, 25)
+            nme_game_bullet.append(bullet)
+
+nme_game_bullet_event = USEREVENT + 1
+pygame.time.set_timer(nme_game_bullet_event, 500)
 
 #def quit_game():
  #   if pygame.KEYDOWN == K_e:
@@ -181,19 +193,6 @@ def main():
             if event.key == pygame.K_SPACE:
                 bullet = pygame.Rect(char_game.x + char_game.width / 2.2 + 1, char_game.y, 5, 25)
                 char_game_bullet.append(bullet)
-
-#----------- Nme bullet -----------
-
-            time = pygame.time.get_ticks()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_l:
-                    time_b = pygame.time.get_ticks()
-                    if time_b - time > 1000:
-                        time = time_b
-                    bullet = pygame.Rect(nme_game.x + nme_game.width / 2.2 + 1, nme_game.y, 5, 25)
-                    nme_game_bullet.append(bullet)
-                    #print(nme_game_bullet)
-
 
 
                 
@@ -226,12 +225,13 @@ def main():
                 #nme_game.y += char_velocity
                 #nme_game.x =- char_velocity
             
-        powerup( keys_pressed, char_game, char_game_bullet)
+        powerup(keys_pressed, char_game, char_game_bullet)
         bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet)
         score_display()
         lives_display()
         display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
-        #nme_shooting(keys_pressed, nme_game, nme_game_bullet)
+        nme_shooting(keys_pressed, nme_game, nme_game_bullet)
+        nme_shooting(nme_game, nme_game_bullet, event_list)
 
         #quit_game()
 
