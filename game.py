@@ -19,7 +19,7 @@ black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
-nme_n = 1
+nme_n = 3
 lives = 3
 bullet_delay = random.randrange(600, 2000)
 nme_game_bullet = USEREVENT +1
@@ -171,7 +171,7 @@ def nme_movement(nme_game):
             nme_v = nme_v * -1
 
 #def nme_spawn():
- #   for i in range
+    #   for i in range
 
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
     for bullet in char_game_bullet:
@@ -222,11 +222,12 @@ def main():
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
-       
+    
         char_movement(keys_pressed, char_game, nme_game_bullet, nme_game)
         bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet)
         score_display()
         lives_display()
+        powerup(keys_pressed, char_game, char_game_bullet)
         display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
         #nme_shooting(nme_game, event)
         nme_movement(nme_game)
