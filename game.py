@@ -144,25 +144,33 @@ def nme_movement(nme_game):
 
 #----------- X axis movement -----------
 
-        if nme_game.x > width-nme_w:
-            nme_game.x = width-nme_w
-
-        elif nme_game.x >= 0 and n % 2 <= 0:
+        if nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 <= 0:
             nme_game.x += nme_v
+        
 
         elif nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 == 1:
             nme_game.x -= nme_v
 
 #----------- Y axis movement -----------
-        print("Y-kord:", nme_game.y)
 
         if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
             nme_game.y += nme_v
-            if nme_game.y > nme_h * n + nme_h:
-                nme_game.y = nme_h * n + nme_h
 
         elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
             nme_game.y += nme_v
+
+#----------- Velocity fix -----------
+        print("X-kord:", nme_game.x, "Y-kord:", nme_game.y)
+
+        if nme_game.x > width - nme_w:
+            nme_game.x = width - nme_w - nme_v
+
+        if nme_game.y > nme_h * n + nme_h:
+            nme_game.y = nme_h * n + nme_h - nme_v
+
+#        This should be the result:
+#        if nme_game.y > 30:
+#            nme_game.y = 0
 
 #----------- Bottom line -----------
 
