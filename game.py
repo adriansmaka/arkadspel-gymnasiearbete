@@ -139,7 +139,7 @@ def nme_movement(nme_game):
 #----------- Height update -----------
         n = 0
         while True:
-            n = nme_game.y / nme_h
+            n = int(nme_game.y / nme_h)
             break
 
 #----------- X axis movement -----------
@@ -152,21 +152,19 @@ def nme_movement(nme_game):
             nme_game.x -= nme_v
 
 #----------- Y axis movement -----------
-
-        if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
+        print("")
+        if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h and nme_game.y % 30 >= 0:
             nme_game.y += nme_v
 
-        elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
+        elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h and nme_game.y % 30 >= 0: 
             nme_game.y += nme_v
 
 #----------- Velocity fix -----------
-        print("X-kord:", nme_game.x, "Y-kord:", nme_game.y)
-
+        print("X-kord:", nme_game.x, "Y-kord:", nme_game.y, "N is:", n)
         if nme_game.x > width - nme_w:
             nme_game.x = width - nme_w - nme_v
-
-        if nme_game.y > nme_h * n + nme_h:
-            nme_game.y = nme_h * n + nme_h - nme_v
+        elif nme_game.x < 0:
+            nme_game.x = 0 + nme_v
 
 #        This should be the result:
 #        if nme_game.y > 30:
