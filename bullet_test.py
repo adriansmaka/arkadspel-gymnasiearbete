@@ -25,7 +25,6 @@ nme_game_bullet = USEREVENT + 1
 nme_spawn_list = []
 nme_spawn = USEREVENT + 0
 max_nme = 20
-nme_amount = 20
 pygame.time.set_timer(nme_spawn, 1000)
 
 def nmes_spawn(nme_game):
@@ -176,7 +175,9 @@ def nme_movement(nme_game):
             nme_v = nme_v * -1
 
 #def nme_spawn():
- #   for i in range
+   # for i in range(nme_amount):
+     #   nme_img.append(pygame.image.load('enemy_1.png'))
+
 
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
     for bullet in char_game_bullet:
@@ -238,6 +239,7 @@ def main():
         lives_display()
         display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
         nme_movement(nme_game)
+        #nme_spawn()
         #nme_shooting(nme_game, event)
         # #quit_game()
 
