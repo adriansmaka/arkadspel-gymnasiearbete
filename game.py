@@ -7,7 +7,6 @@ import random
 from pygame.constants import K_ESCAPE, KEYDOWN, USEREVENT, K_e
 
 pygame.init()
-#width, height = 1280, 960
 width, height = 1100, 740
 window = pygame.display.set_mode((width, height))
 #useful assets
@@ -19,7 +18,7 @@ black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
-nme_n = 1
+nme_n = 3
 lives = 3
 bullet_delay = random.randrange(600, 2000)
 nme_game_bullet = USEREVENT +1
@@ -46,12 +45,12 @@ def lives_display():
 wall = pygame.Rect(0, char_border_h, width, height)
 
 #char_lives = 3
+char_x, char_y = width / 2, height * 0.6
 char_w, char_h = 64, 64
-char_x, char_y = 0, 0
 char_img = pygame.image.load(os.path.join('img', 'ship.png'))
 char = pygame.transform.scale(char_img, (char_w, char_h))
 
-nme_x, nme_y = width/2, 0
+nme_x, nme_y = 0, 0
 nme_w, nme_h = 70, 30
 nme_img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
 nme = pygame.transform.scale(nme_img, (nme_w, nme_h))
@@ -134,44 +133,51 @@ nme_game_bullet_event = USEREVENT + 1
 pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
 
 def nme_movement(nme_game):
-    nme_v = 10
+    nme_v = 8
     if nme_game.y < nme_border_h:
-        clears = 0
-        while clears == 0:
-            n = 0
 
 #----------- Height update -----------
-
-            while n < 6:
-                n = nme_game.y / nme_h
-                break
+        n = 0
+        while True:
+            n = int(nme_game.y / nme_h)
+            break
 
 #----------- X axis movement -----------
 
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 <= 0:
-                nme_game.x += nme_v
+        if nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 <= 0:
+            nme_game.x += nme_v
+        
 
-            elif nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 == 1:
-                nme_game.x -= nme_v
+        elif nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 == 1:
+            nme_game.x -= nme_v
 
 #----------- Y axis movement -----------
+        print("")
+        if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h and nme_game.y % 30 >= 0:
+            nme_game.y += nme_v
 
-            if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
-                nme_game.y += nme_v
+        elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h and nme_game.y % 30 >= 0: 
+            nme_game.y += nme_v
 
-            elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
-                nme_game.y += nme_v
+#----------- Velocity fix -----------
+        print("X-kord:", nme_game.x, "Y-kord:", nme_game.y, "N is:", n)
+        if nme_game.x > width - nme_w:
+            nme_game.x = width - nme_w - nme_v
+        elif nme_game.x < 0:
+            nme_game.x = 0 + nme_v
 
-            break
+#        This should be the result:
+#        if nme_game.y > 30:
+#            nme_game.y = 0
+
+#----------- Bottom line -----------
 
     else:
         if nme_game.x >= 0 and nme_game.x <= width - nme_w:
             nme_game.x += nme_v
-        else:
-            nme_v = nme_v * -1
 
 #def nme_spawn():
- #   for i in range
+    #   for i in range
 
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
     for bullet in char_game_bullet:
@@ -222,11 +228,12 @@ def main():
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
-       
+    
         char_movement(keys_pressed, char_game, nme_game_bullet, nme_game)
         bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet)
         score_display()
         lives_display()
+        powerup(keys_pressed, char_game, char_game_bullet)
         display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
         #nme_shooting(nme_game, event)
         nme_movement(nme_game)

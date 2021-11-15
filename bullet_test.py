@@ -20,6 +20,7 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 nme_n = 1
 lives = 3
+<<<<<<< HEAD
 bullet_delay = random.randrange(600, 2000)
 nme_game_bullet = USEREVENT + 1
 nme_spawn_list = []
@@ -29,6 +30,13 @@ pygame.time.set_timer(nme_spawn, 1000)
 
 def nmes_spawn(nme_game):
     nme_spawn_list.append(nme_game)
+=======
+bullet_delay = 0
+nme_game_bullet = USEREVENT +1
+
+for i in random.randrange(0, 2000, 200):
+    bullet_delay = i
+>>>>>>> 09cfa8971033fd32aa2d4b2c8b8753129cb24950
 
 #score display
 score = 0
@@ -51,12 +59,20 @@ wall = pygame.Rect(0, char_border_h, width, height)
 
 #char_lives = 3
 char_w, char_h = 64, 64
+<<<<<<< HEAD
 char_x, char_y = width/2 - char_w, 500
 char_img = pygame.image.load(os.path.join('img', 'ship.png'))
 char = pygame.transform.scale(char_img, (char_w, char_h))
 
 nme_x, nme_y = 0, 0
+=======
+char_x, char_y = width / 2 - char_w / 2, height * 0.6
+char_img = pygame.image.load(os.path.join('img', 'ship.png'))
+char = pygame.transform.scale(char_img, (char_w, char_h))
+
+>>>>>>> 09cfa8971033fd32aa2d4b2c8b8753129cb24950
 nme_w, nme_h = 70, 30
+nme_x, nme_y = 0, 0
 nme_img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
 nme = pygame.transform.scale(nme_img, (nme_w, nme_h))
 nme_border_h = char_border_h - nme_h - 30
@@ -138,7 +154,8 @@ nme_game_bullet_event = USEREVENT + 1
 pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
 
 def nme_movement(nme_game):
-    nme_v = 10
+    print("x pos:", nme_game.x,"|","y pos:", nme_game.y)
+    nme_v = 4
     if nme_game.y < nme_border_h:
         clears = 0
         while clears == 0:
@@ -152,15 +169,17 @@ def nme_movement(nme_game):
 
 #----------- X axis movement -----------
 
-            if nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 <= 0:
+            #if nme_game.x > width-nme_w:
+                #nme_game.x = width-nme_w
+
+            if nme_game.x >= 0 and nme_game.x <= width - nme_w and  n % 2 <= 0:
                 nme_game.x += nme_v
 
             elif nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 == 1:
                 nme_game.x -= nme_v
 
 #----------- Y axis movement -----------
-
-            if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
+            if nme_game.x == width - nme_w - nme_v and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
                 nme_game.y += nme_v
 
             elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
@@ -175,9 +194,13 @@ def nme_movement(nme_game):
             nme_v = nme_v * -1
 
 #def nme_spawn():
+<<<<<<< HEAD
    # for i in range(nme_amount):
      #   nme_img.append(pygame.image.load('enemy_1.png'))
 
+=======
+    #   for i in range
+>>>>>>> 09cfa8971033fd32aa2d4b2c8b8753129cb24950
 
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
     for bullet in char_game_bullet:
