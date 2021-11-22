@@ -22,19 +22,8 @@ nme_n = 1
 lives = 3
 bullet_delay = random.randrange(600, 2000)
 nme_game_bullet = USEREVENT + 1
-nme_spawn_list = []
-nme_spawn = USEREVENT + 0
 nme_amount = 20
-pygame.time.set_timer(nme_spawn, 1000)
-
-def nmes_spawn(nme_game):
-    enemies = []
-    maxenemies = 10
-    for i in range(maxenemies):
-        nme1 = nme()
-        nme1 = nme_game()
-    enemies.append(nme1)
-    pygame.display.update()
+nme_list = []
 
 #score display
 score = 0
@@ -65,7 +54,6 @@ nme_x, nme_y = 0, 0
 nme_w, nme_h = 70, 30
 nme_img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
 nme = pygame.transform.scale(nme_img, (nme_w, nme_h))
-nme.sprite = nme(pygame.sprite.Sprite)
 nme_border_h = char_border_h - nme_h - 30
 
 
@@ -75,11 +63,7 @@ char_bullet = pygame.transform.scale(char_bullet_img, (bullet_w, bullet_h))
 nme_bullet_img = pygame.image.load(os.path.join('img', 'nmebullet.png'))
 nme_bullet = pygame.transform.scale(nme_bullet_img, (bullet_w, bullet_h))
 
-def wall_create():
-    numwall = int(height / nme_h)
-    for x in range(numwall):
-        wall = pygame.Rect(0, 0, width, nme_h)
-    return wall
+
 
 wall2 = pygame.Rect(0, 0, width, nme_h)
 wall3 = pygame.Rect(0, 0, width, nme_h * 2)
@@ -117,7 +101,7 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
     #spawn_event = USEREVENT + 3
     #pygame.time.set_timer(spawn_event, 2000)
     #for i in range(nme_amount):
-     #   if event.type == spawn_event:
+    #   if event.type == spawn_event:
         
     
         
@@ -129,9 +113,6 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
     for bullets in nme_game_bullet:
         pygame.draw.rect(window, black, bullets)
 
-def spawn(nme_game):
-    spawn = window.blit(nme, (nme_game.x, nme_game.y))
-    return spawn
 
 def char_movement(keys_pressed, char_game, nme_game_bullet, nme_game):
     #char movement
@@ -161,8 +142,6 @@ def powerup(keys_pressed, char_game, char_game_bullet):
 nme_game_bullet_event = USEREVENT + 1
 pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
 
-spawn_event = USEREVENT + 3
-pygame.time.set_timer(spawn_event, 1000)
 
 def nme_movement(nme_game):
     nme_v = 10
@@ -193,17 +172,24 @@ def nme_movement(nme_game):
             elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
                 nme_game.y += nme_v
 
+#----------- PLaceholder -----------
+
+            div =  nme_game.x % 220
+            print("X= ", nme_game.x, "div = ", div) 
+            if div == 0:
+                print("true")
+
+            #nme_start = width % nme_game.x
+            #if nme_start == 0:
+            #    print("true")
+            
             break
 
-    else:
-        if nme_game.x >= 0 and nme_game.x <= width - nme_w:
-            nme_game.x += nme_v
-        else:
-            nme_v = nme_v * -1
-
-#def nme_spawn():
-   # for i in range(nme_amount):
-     #   nme_img.append(pygame.image.load('enemy_1.png'))
+#    else:
+#        if nme_game.x >= 0 and nme_game.x <= width - nme_w:
+#            nme_game.x += nme_v
+#        else:
+#            nme_v = nme_v * -1
 
 
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
@@ -225,10 +211,20 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
             global lives
             lives -= 1
 
+def nme_spawner():
+    nme_game = pygame.Rect((nme_x, nme_y), (nme_w, nme_h))
+    return nme_game
+
 def main():
+    
+
     char_game = pygame.Rect((char_x, char_y), (char_w, char_h))
     nme_game = pygame.Rect((nme_x, nme_y), (nme_w, nme_h))
-    nme.sprite = nme(pygame.sprite.Sprite)
+    if nme_game.x == 0:
+        nme_list = []
+        for i in range(10):
+            nme_list.append(nme_game)
+            #print(nme_list)
 
     char_game_bullet = []
     nme_game_bullet = []
@@ -250,12 +246,6 @@ def main():
                 bullet = pygame.Rect(nme_game.x + nme_game.width / 2.2 + 1, nme_game.y, 5, 25)
                 nme_game_bullet.append(bullet)
 
-            if event.type == spawn_event:
-                for i in range(nme_amount):
-                    spawn(nme_game)
-
-            #if event.type == nme_spawn:
-                #nme.nmes_spawn(nme_game)
                 
                 
             #WORK IN PROGRESS. NOT DONE, MAINMENU / SCORESCREEN!!!
@@ -264,7 +254,7 @@ def main():
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
-    
+        nme_spawner()
         char_movement(keys_pressed, char_game, nme_game_bullet, nme_game)
         bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet)
         score_display()
@@ -280,5 +270,3 @@ pygame.QUIT
 #if __name__ == "__main__":
 
 main()
-
-""" https://www.pygame.org/docs/ref/rect.html """
