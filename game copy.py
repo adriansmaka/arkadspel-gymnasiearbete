@@ -4,6 +4,7 @@ import os
 from pygame import font
 import random
 from pygame.constants import K_ESCAPE, KEYDOWN, USEREVENT, K_e
+from pygame.sprite import collide_mask
 
 pygame.init()
 #width, height = 1280, 960
@@ -22,13 +23,13 @@ nme_n = 1
 lives = 3
 bullet_delay = random.randrange(600, 2000)
 nme_game_bullet = USEREVENT + 1
+nme_spawner = USEREVENT + 0
 nme_spawn_list = []
-nme_spawn = USEREVENT + 0
 nme_amount = 20
-pygame.time.set_timer(nme_spawn, 1000)
 
-def nmes_spawn(nme_game):
-    nme_spawn_list.append(nme_game)
+
+#def nmes_spawn(nme_game):
+ #   nme_spawn_list.append(nme_game)
 
 #score display
 score = 0
@@ -85,7 +86,7 @@ wall10 = pygame.Rect(0, 0, width, nme_h * 9)
 wall11 = pygame.Rect(0, 0, width, nme_h * 10)
 wall12 = pygame.Rect(0, 0, width, nme_h * 11)
 
-def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
+def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet, nme_spawner):
     window.fill(white)
     pygame.draw.rect(window, red, wall12)
     pygame.draw.rect(window, green, wall11)
@@ -119,9 +120,13 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
     for bullets in nme_game_bullet:
         pygame.draw.rect(window, black, bullets)
 
+    for place_holder_nme in nme_spawner:
+        pygame.draw.rect(window, black, place_holder_nme)
+
 def spawn(nme_game):
     spawn = window.blit(nme, (nme_game.x, nme_game.y))
     return spawn
+
 
 def char_movement(keys_pressed, char_game, nme_game_bullet, nme_game):
     #char movement
@@ -151,7 +156,7 @@ def powerup(keys_pressed, char_game, char_game_bullet):
 nme_game_bullet_event = USEREVENT + 1
 pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
 
-spawn_event = USEREVENT + 3
+spawn_event = USEREVENT + 0
 pygame.time.set_timer(spawn_event, 1000)
 
 def nme_movement(nme_game):
@@ -196,13 +201,13 @@ def nme_movement(nme_game):
      #   nme_img.append(pygame.image.load('enemy_1.png'))
 
 
-def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
+def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet, nme_spawner):
     for bullet in char_game_bullet:
         bullet.y -= bullet_velocity
         if nme_game.colliderect(bullet):
             char_game_bullet.remove(bullet)
-            nme_game.x = random.randrange(-1000, -100)
-            nme_game.y = random.randrange(-1000, -100)
+            nme_game.x = random.randrange(0, 1)
+            nme_game.y = random.randrange(0, 1)
             global score
             score += 1
             print(score)
@@ -214,6 +219,14 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
             nme_game_bullet.remove(bullet)
             global lives
             lives -= 1
+    for nmes in nme_spawner:
+        nmes.x += char_velocity
+    
+    #if nmes.colliderect(bullet):
+     #   char_game_bullet.remove(bullet)
+    
+#def nmes_physics(nmes, char_game_bullet):
+    
 
 def main():
     char_game = pygame.Rect((char_x, char_y), (char_w, char_h))
@@ -221,6 +234,7 @@ def main():
 
     char_game_bullet = []
     nme_game_bullet = []
+    nme_spawner = []
     #game run
     clock = pygame.time.Clock()
     run = True
@@ -238,13 +252,11 @@ def main():
             if event.type == nme_game_bullet_event:
                 bullet = pygame.Rect(nme_game.x + nme_game.width / 2.2 + 1, nme_game.y, 5, 25)
                 nme_game_bullet.append(bullet)
+                   
 
             if event.type == spawn_event:
-                for i in range(nme_amount):
-                    spawn(nme_game)
-
-            #if event.type == nme_spawn:
-                #nme.nmes_spawn(nme_game)
+                nmes = pygame.Rect(0, 0, 60, 30)
+                nme_spawner.append(nmes)
                 
                 
             #WORK IN PROGRESS. NOT DONE, MAINMENU / SCORESCREEN!!!
@@ -255,12 +267,12 @@ def main():
         keys_pressed = pygame.key.get_pressed()
        
         char_movement(keys_pressed, char_game, nme_game_bullet, nme_game)
-        bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet)
+        bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet, nme_spawner)
         score_display()
         lives_display()
-        display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
+        display_window(char_game, nme_game, char_game_bullet, nme_game_bullet, nme_spawner)
         nme_movement(nme_game)
-        #nme_spawn()
+       # nme_spawn()
         #nme_shooting(nme_game, event)
         # #quit_game()
 
