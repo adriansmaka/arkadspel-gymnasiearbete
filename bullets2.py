@@ -67,9 +67,7 @@ class Nme:
     w, h = 70, 30
     img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
     nme = pygame.transform.scale(img, (w, h))
-nme_list = pygame.sprite.Group()
-nme = Nme()
-nme_list.add(nme)
+
 
 
 nme_border = char_border - Char.h - 30
@@ -82,17 +80,17 @@ nme_bullet = pygame.transform.scale(nme_bullet_img, (bullet_w, bullet_h))
 
 
 
-wall2 = pygame.Rect(0, 0, width, nme.h)
-wall3 = pygame.Rect(0, 0, width, nme.h * 2)
-wall4 = pygame.Rect(0, 0, width, nme.h * 3)
-wall5 = pygame.Rect(0, 0, width, nme.h * 4)
-wall6 = pygame.Rect(0, 0, width, nme.h * 5)
-wall7 = pygame.Rect(0, 0, width, nme.h * 6)
-wall8 = pygame.Rect(0, 0, width, nme.h * 7)
-wall9 = pygame.Rect(0, 0, width, nme.h * 8)
-wall10 = pygame.Rect(0, 0, width, nme.h * 9)
-wall11 = pygame.Rect(0, 0, width, nme.h * 10)
-wall12 = pygame.Rect(0, 0, width, nme.h * 11)
+wall2 = pygame.Rect(0, 0, width, Nme.h)
+wall3 = pygame.Rect(0, 0, width, Nme.h * 2)
+wall4 = pygame.Rect(0, 0, width, Nme.h * 3)
+wall5 = pygame.Rect(0, 0, width, Nme.h * 4)
+wall6 = pygame.Rect(0, 0, width, Nme.h * 5)
+wall7 = pygame.Rect(0, 0, width, Nme.h * 6)
+wall8 = pygame.Rect(0, 0, width, Nme.h * 7)
+wall9 = pygame.Rect(0, 0, width, Nme.h * 8)
+wall10 = pygame.Rect(0, 0, width, Nme.h * 9)
+wall11 = pygame.Rect(0, 0, width, Nme.h * 10)
+wall12 = pygame.Rect(0, 0, width, Nme.h * 11)
 
 def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
     window.fill(white)
@@ -110,8 +108,8 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
     pygame.draw.rect(window, blue, wall)
 
     window.blit(Char.char, (char_game.x, char_game.y))
-    window.blit(nme.nme, (nme_game.x, nme_game.y))
-    window.blit(nme.nme, (nme_game.x, nme_game.y))
+    window.blit(Nme.nme, (nme_game.x, nme_game.y))
+    window.blit(Nme.nme, (nme_game.x, nme_game.y))
     
     #spawn = window.blit(nme, (nme_game.x, nme_game.y))
     #spawn = window.blit(nme, (nme_game.x, nme_game.y))
@@ -160,9 +158,9 @@ nme_game_bullet_event = USEREVENT + 1
 pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
 
 
-def nme_movement(nme_game):
+def nme_movement(nmes):
     nme_v = 10
-    if nme_game.y < nme_border:
+    if nmes.y < nme_border:
         clears = 0
         while clears == 0:
             n = 0
@@ -170,36 +168,25 @@ def nme_movement(nme_game):
 #----------- Height update -----------
 
             while n < 6:
-                n = nme_game.y / nme.h
+                n = nmes.y / Nme.h
                 break
 
 #----------- X axis movement -----------
 
-            if nme_game.x >= 0 and nme_game.x <= width - nme.w and n % 2 <= 0:
-                nme_game.x += nme_v
+            if nmes.x >= 0 and nmes.x <= width - Nme.w and n % 2 <= 0:
+                nmes.x += nme_v
 
-            elif nme_game.x >= 0 and nme_game.x <= width - nme.w and n % 2 == 1:
-                nme_game.x -= nme_v
+            elif nmes.x >= 0 and nmes.x <= width - Nme.w and n % 2 == 1:
+                nmes.x -= nme_v
 
 #----------- Y axis movement -----------
 
-            if nme_game.x == width - nme.w and nme_game.y >= nme.h * n and nme_game.y <= nme.h * n + nme.h:
-                nme_game.y += nme_v
+            if nmes.x == width - Nme.w and nmes.y >= Nme.h * n and nmes.y <= Nme.h * n + Nme.h:
+                nmes.y += nme_v
 
-            elif nme_game.x == 0 and nme_game.y >= nme.h * n and nme_game.y <= nme.h * n + nme.h:
-                nme_game.y += nme_v
+            elif nmes.x == 0 and nmes.y >= Nme.h * n and nmes.y <= Nme.h * n + Nme.h:
+                nmes.y += nme_v
 
-#----------- PLaceholder -----------
-
-            div =  nme_game.x % 120
-            #print("X= ", nme_game.x, "div = ", div)
-            if div == 0:
-                nme_list.append(nme_game)
-
-            #nme_start = width % nme_game.x
-            #if nme_start == 0:
-            #    print("true")
-            
             break
 
 #    else:
@@ -229,14 +216,14 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
             lives -= 1
 
 def nme_spawner():
-    nme_game = pygame.Rect((nme.x, nme.y), (nme.w, nme.h))
+    nme_game = pygame.Rect((Nme.x, Nme.y), (Nme.w, Nme.h))
     return nme_game
 
 def main():
     
 
-    char_game = pygame.Rect((char.x, char.y), (Char.w, Char.h))
-    nme_game = pygame.Rect((nme.x, nme.y), (nme.w, nme.h))
+    char_game = pygame.Rect((Char.x, Char.y), (Char.w, Char.h))
+    nme_game = pygame.Rect((Nme.x, Nme.y), (Nme.w, Nme.h))
     if nme_game.x == 0:
         nme_list = []
         for i in range(10):
