@@ -30,12 +30,12 @@ nme_spawn_list = [5]
 nme_amount = 20
 
 nme_movement_ph = random.randint(1, 2)
-print(nme_movement_ph)
+#print(nme_movement_ph)
 
 
 nme_movement_event = USEREVENT + 3
 test = pygame.time.set_timer(nme_movement_event, 1)
-print(nme_movement_ph)
+#print(nme_movement_ph)
 
 
 #def nmes_spawn(nme_game):
@@ -96,21 +96,21 @@ class enemy(pygame.sprite.Sprite):
         self.moveY = 30
 
     def move(self):
-            self.x += self.moveX 
 
-            if self.y >= 500:
-                self.y = 500
-                self.moveY = 0
-                self.moveX = 0
+        #print("D:",d1)
+        #print("X:",self.x)
+        #print("Y:",self.y)
 
-            if self.x == 200:
-                if nme_movement_ph == 2:
-                    self.moveX = -5
-                self.moveX = 3
-                self.y += self.moveY
-            elif self.x >= 1030:
-                self.moveX = -3
-                self.y += self.moveY
+        if self.x <= width - nme_w:
+            self.x += self.moveX
+        wdiv = int(width - nme_w/ 5)
+        val = self.x % wdiv
+        if val == 0 :
+            d1 = random.randrange(0,2)
+            print(d1)
+            
+                
+                #self.y += self.moveY
 
     def draw(self):
         window.blit(nme, (self.x, self.y))
@@ -289,7 +289,7 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet, nme_s
             #nme_game.y = random.randrange(0, 1)
             global score
             score += 1
-            print(score)
+            #print(score)
         elif bullet.y > height:
             char_game_bullet.remove(bullet)
     for bullet in nme_game_bullet:
