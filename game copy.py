@@ -3,8 +3,10 @@ import pygame
 import os
 from pygame import font
 import random
+from pygame import draw
+from pygame import sprite
 from pygame.constants import K_ESCAPE, KEYDOWN, USEREVENT, K_e
-from pygame.sprite import collide_mask
+from pygame.sprite import Sprite, collide_mask
 
 pygame.init()
 #width, height = 1280, 960
@@ -24,7 +26,7 @@ lives = 3
 bullet_delay = random.randrange(600, 2000)
 nme_game_bullet = USEREVENT + 1
 nme_spawner = USEREVENT + 0
-nme_spawn_list = []
+nme_spawn_list = [5]
 nme_amount = 20
 
 nme_movement_ph = random.randint(1, 2)
@@ -55,8 +57,13 @@ def lives_display():
     pygame.display.update()
 
 
+
+
 # x-kord, y-kord, width, height
 wall = pygame.Rect(0, char_border_h, width, height)
+
+#movement switchers
+#movement_switch1 = pygame.Rect(192, char_border_h, width, height)!!!!!!!!
 
 #char_lives = 3
 char_w, char_h = 64, 64
@@ -77,6 +84,59 @@ char_bullet_img = pygame.image.load(os.path.join('img', 'stor_bullet.png'))
 char_bullet = pygame.transform.scale(char_bullet_img, (bullet_w, bullet_h))
 nme_bullet_img = pygame.image.load(os.path.join('img', 'nmebullet.png'))
 nme_bullet = pygame.transform.scale(nme_bullet_img, (bullet_w, bullet_h))
+
+
+
+class enemy(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.x = random.randint(0, 1)
+        self.y = 0
+        self.moveX = 5
+        self.moveY = 30
+
+    def move(self):
+            self.x += self.moveX 
+
+            if self.y >= 500:
+                self.y = 500
+                self.moveY = 0
+                self.moveX = 0
+
+            if self.x == 200:
+                if nme_movement_ph == 2:
+                    self.moveX = -5
+                self.moveX = 3
+                self.y += self.moveY
+            elif self.x >= 1030:
+                self.moveX = -3
+                self.y += self.moveY
+
+    def draw(self):
+        window.blit(nme, (self.x, self.y))
+        self.hitbox = (self.x, self.y, 70, 30)
+        pygame.draw.rect(window, (255, 0, 0), self.hitbox, 2)
+
+#class enemy(Sprite):
+    
+enemies = pygame.sprite.Group()
+
+enemy_list = []
+
+
+for i in range(1):
+    new_enemy = enemy()
+    enemy_list.append(new_enemy)
+ 
+def enemy_spawn():
+    enemy.x = 0
+    enemy.y = 0
+    enemy_list.append(new_enemy)
+
+enemies.add(new_enemy)
+
+enemy_spawn_event = USEREVENT + 5
+pygame.time.set_timer(enemy_spawn_event, 1000)
 
 def wall_create():
     numwall = int(height / nme_h)
@@ -255,6 +315,7 @@ def main():
     char_game_bullet = []
     nme_game_bullet = []
     nme_spawner = []
+    enemies.update()
     #game run
     clock = pygame.time.Clock()
     run = True
@@ -273,7 +334,9 @@ def main():
                 bullet = pygame.Rect(nme_game.x + nme_game.width / 2.2 + 1, nme_game.y, 5, 25)
                 nme_game_bullet.append(bullet)
                    
-
+            #if event.type == enemy_spawn_event:
+                #enemy_spawn()  #???????
+                
            # if event.type == spawn_event:            
              #   nme_spawner.append(nmes)
          
@@ -292,6 +355,17 @@ def main():
             #WORK IN PROGRESS. NOT DONE, MAINMENU / SCORESCREEN!!!
             if lives < 0:
                 run = False
+        
+        for enemy in enemy_list:
+            enemy.move()
+        
+        for enemy in enemy_list:
+            enemy.draw()
+
+        for bullet in char_game_bullet:
+            if bullet.colliderect(enemy.hitbox):
+                char_game_bullet.remove(bullet)
+                
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
