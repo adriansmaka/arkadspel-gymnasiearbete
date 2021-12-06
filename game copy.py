@@ -92,6 +92,8 @@ class enemy(pygame.sprite.Sprite):
         super().__init__()
         self.x = random.randint(0, 1)
         self.y = 0
+        self.w = 70
+        self.h = 30
         self.moveX = 5
         self.moveY = 30
 
@@ -101,9 +103,9 @@ class enemy(pygame.sprite.Sprite):
         #print("X:",self.x)
         #print("Y:",self.y)
 
-        if self.x <= width - nme_w:
+        if self.x <= width - self.w:
             self.x += self.moveX
-        wdiv = int(width - nme_w/ 5)
+        wdiv = int(width - self.w/ 5)
         val = self.x % wdiv
         if val == 0 :
             d1 = random.randrange(0,2)
