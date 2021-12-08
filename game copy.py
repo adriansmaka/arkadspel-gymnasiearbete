@@ -23,19 +23,29 @@ green = (0, 255, 0)
 blue = (0, 0, 255)
 nme_n = 1
 lives = 3
-bullet_delay = random.randrange(600, 2000)
+bullet_delay = 350
 nme_game_bullet = USEREVENT + 1
 nme_spawner = USEREVENT + 0
 nme_spawn_list = [5]
 nme_amount = 20
+nme_random_movement_list = []
+shuffled_list = []
+jump_amount = 500
+for i in range(jump_amount):
+    nme_random_movement_list.append(random.randint(1,8))
+print(nme_random_movement_list)
 
-nme_movement_ph = random.randint(1, 2)
-print(nme_movement_ph)
+
+bg = pygame.image.load(os.path.join('img', 'resizedImage.png')).convert_alpha()
+bg_scaled = pygame.transform.scale(bg, (width, height))
+
+#nme_movement_ph = random.randint(1, 2)
+#print(nme_movement_ph)
 
 
-nme_movement_event = USEREVENT + 3
-test = pygame.time.set_timer(nme_movement_event, 1)
-print(nme_movement_ph)
+#nme_movement_event = USEREVENT + 3
+#test = pygame.time.set_timer(nme_movement_event, 1)
+#print(nme_movement_ph)
 
 
 #def nmes_spawn(nme_game):
@@ -46,13 +56,13 @@ score = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
 
 def score_display():
-    score_game = font.render("Score: " + str(score), True, (255, 255, 255))
+    score_game = font.render("Score: " + str(score), True, (0, 0, 0))
     window.blit(score_game, (950, 700))
 
 char_border_h = int(height * 0.4)
 
 def lives_display():
-    lives_game = font.render("Lives: " + str(lives), True, (255,255,255))
+    lives_game = font.render("Lives: " + str(lives), True, (0,0,0))
     window.blit(lives_game, (20, 700))
     pygame.display.update()
 
@@ -91,9 +101,13 @@ class enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.x = random.randint(0, 1)
-        self.y = 0
+        self.y = 150
         self.moveX = 5
-        self.moveY = 30
+        self.moveY = 0
+        print(self.moveX)
+        if score >= 10:
+            self.moveX += 5
+            print(self.moveX)
 
     def move(self):
             self.x += self.moveX 
@@ -103,26 +117,58 @@ class enemy(pygame.sprite.Sprite):
                 self.moveY = 0
                 self.moveX = 0
 
-            if self.x == 200:
-                if nme_movement_ph == 2:
-                    self.moveX = -5
-                self.moveX = 3
+            if self.x <= 0:
+                self.moveX = self.moveX * -1
                 self.y += self.moveY
+            elif self.x >= 220 and nme_random_movement_list[0] == 1:
+                self.moveX = self.moveX * -1
+                nme_random_movement_list.pop(0)
+            elif self.x >= 440 and nme_random_movement_list[0] == 2:
+                self.moveX = self.moveX * -1
+                nme_random_movement_list.pop(0)
+            elif self.x >= 660 and nme_random_movement_list[0] == 3:
+                self.moveX = self.moveX * -1
+                nme_random_movement_list.pop(0)
+            elif self.x >= 880 and nme_random_movement_list[0] == 4:
+                self.moveX = self.moveX * -1
+                nme_random_movement_list.pop(0)
             elif self.x >= 1030:
-                self.moveX = -3
+                self.moveX = self.moveX * -1
                 self.y += self.moveY
+            elif self.x <= 880 and nme_random_movement_list[0] == 5:
+                self.moveX = self.moveX
+                nme_random_movement_list.pop(0)
+            elif self.x <= 660 and nme_random_movement_list[0] == 6:
+                self.moveX = self.moveX
+                nme_random_movement_list.pop(0)
+            elif self.x <= 440 and nme_random_movement_list[0] == 7:
+                self.moveX = self.moveX
+                nme_random_movement_list.pop(0)
+            elif self.x <= 220 and nme_random_movement_list[0] == 8:
+                self.moveX = self.moveX
+                nme_random_movement_list.pop(0)
+
+           # if score > 15:
+           #     self.moveX = 7
+           # if score > 30:
+           #     self.moveX = 10
 
     def draw(self):
         window.blit(nme, (self.x, self.y))
         self.hitbox = (self.x, self.y, 70, 30)
         pygame.draw.rect(window, (255, 0, 0), self.hitbox, 2)
+    
+    #def shooting(self):
+
+
+#def loadify(bg_scaled):
+ #   return pygame.image.load(bg_scaled).convert_alpha()
 
 #class enemy(Sprite):
     
 enemies = pygame.sprite.Group()
 
 enemy_list = []
-
 
 for i in range(1):
     new_enemy = enemy()
@@ -170,6 +216,7 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet, nme_s
     pygame.draw.rect(window, red, wall3)
     pygame.draw.rect(window, green, wall2)
     pygame.draw.rect(window, blue, wall)
+    window.blit(bg_scaled, (0,0))
     window.blit(char, (char_game.x, char_game.y))
     window.blit(nme, (nme_game.x, nme_game.y))
     #window.blit(nmes, (nmes.x, nmes.y))
@@ -185,10 +232,11 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet, nme_s
     #display_triangle()
 
     for bullets in char_game_bullet:
-        pygame.draw.rect(window, black, bullets)
+        pygame.draw.rect(window, blue, bullets)
 
     for bullets in nme_game_bullet:
-        pygame.draw.rect(window, black, bullets)
+        pygame.draw.rect(window, red, bullets)
+
 
     #for place_holder_nme in nme_spawner:
         #pygame.draw.rect(window, black, place_holder_nme)
@@ -218,10 +266,10 @@ def char_movement(keys_pressed, char_game, nme_game_bullet, nme_game):
         if char_game.y < char_border_h:
             char_game.y = char_border_h
         
-        if nme_game.x == 768:
-            nme_movement_ph == 1
-        if nme_game.x == 0:
-            nme_movement_ph == 2
+       # if nme_game.x == 768:
+       #     nme_movement_ph == 1
+       # if nme_game.x == 0:
+       #     nme_movement_ph == 2
 
 
 def powerup(keys_pressed, char_game, char_game_bullet):     
@@ -331,10 +379,10 @@ def main():
                     char_game_bullet.append(bullet)
             
             if event.type == nme_game_bullet_event:
-                bullet = pygame.Rect(nme_game.x + nme_game.width / 2.2 + 1, nme_game.y, 5, 25)
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
                 nme_game_bullet.append(bullet)
                    
-            #if event.type == enemy_spawn_event:
+            #  if event.type == enemy_spawn_event:
                 #enemy_spawn()  #???????
                 
            # if event.type == spawn_event:            
@@ -346,15 +394,18 @@ def main():
                # elif nme_game.x == 769:
                 #    nme_movement_ph = 1
                     
-            if event.type == nme_movement_event:
-                if nme_movement_ph == 1:
-                    nme_game.x -= 1
-                elif nme_movement_ph == 2:
-                     nme_game.x += 1    
+            #if event.type == nme_movement_event:
+              #  if nme_movement_ph == 1:
+              #      nme_game.x -= 1
+              #  elif nme_movement_ph == 2:
+              #       nme_game.x += 1    
 
             #WORK IN PROGRESS. NOT DONE, MAINMENU / SCORESCREEN!!!
-            if lives < 0:
-                run = False
+           # if lives < 0:
+               # run = False
+
+           
+
         
         for enemy in enemy_list:
             enemy.move()
@@ -365,7 +416,26 @@ def main():
         for bullet in char_game_bullet:
             if bullet.colliderect(enemy.hitbox):
                 char_game_bullet.remove(bullet)
-                
+                global score
+                score += 1
+        
+        GAMEOVER = "Game Over"
+        FONTNAME = 'freesansbold.ttf'
+        GAMEOVERTXTCOLOR = (150, 150, 150)
+        CENTERSCREENPOS = (550, 250)
+            
+        if lives < 0:
+            print("End")
+            window.fill(black)
+            font = pygame.font.Font(FONTNAME, 30)
+            text_surface = font.render(GAMEOVER, True, GAMEOVERTXTCOLOR)
+            text_rect = text_surface.get_rect()
+            text_rect.center = CENTERSCREENPOS
+            window.blit(text_surface, text_rect)
+            pygame.display.update()
+            pygame.time.wait(5000)
+
+        #window.blit(bg_scaled, (0,0))
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
