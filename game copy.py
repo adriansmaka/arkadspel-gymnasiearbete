@@ -29,22 +29,40 @@ nme_spawner = USEREVENT + 0
 nme_spawn_list = [5]
 nme_amount = 20
 nme_random_movement_list = []
+<<<<<<< HEAD
 shuffled_list = []
 jump_amount = 500
 for i in range(jump_amount):
     nme_random_movement_list.append(random.randint(1,8))
 print(nme_random_movement_list)
 
+=======
+n=20
+for i in range(n):
+    nme_random_movement_list.append(random.randint(1,2))
+#print(nme_random_movement_list)
+
+#if nme_random_movement_list[0] == 1:
+
+
+nme_movement_ph = random.randint(1, 2)
+#print(nme_movement_ph)
+>>>>>>> c3224c4e0f22018b99d79175af2b149a9e295ccd
 
 bg = pygame.image.load(os.path.join('img', 'resizedImage.png')).convert_alpha()
 bg_scaled = pygame.transform.scale(bg, (width, height))
 
+<<<<<<< HEAD
 #nme_movement_ph = random.randint(1, 2)
 #print(nme_movement_ph)
 
 
 #nme_movement_event = USEREVENT + 3
 #test = pygame.time.set_timer(nme_movement_event, 1)
+=======
+nme_movement_event = USEREVENT + 3
+test = pygame.time.set_timer(nme_movement_event, 1)
+>>>>>>> c3224c4e0f22018b99d79175af2b149a9e295ccd
 #print(nme_movement_ph)
 
 
@@ -100,8 +118,15 @@ nme_bullet = pygame.transform.scale(nme_bullet_img, (bullet_w, bullet_h))
 class enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+<<<<<<< HEAD
         self.x = random.randint(0, 1)
         self.y = 150
+=======
+        self.x = 0
+        self.y = 0
+        self.w = 70
+        self.h = 30
+>>>>>>> c3224c4e0f22018b99d79175af2b149a9e295ccd
         self.moveX = 5
         self.moveY = 0
         print(self.moveX)
@@ -109,7 +134,10 @@ class enemy(pygame.sprite.Sprite):
             self.moveX += 5
             print(self.moveX)
 
+
+
     def move(self):
+<<<<<<< HEAD
             self.x += self.moveX 
 
             if self.y >= 500:
@@ -152,6 +180,37 @@ class enemy(pygame.sprite.Sprite):
            #     self.moveX = 7
            # if score > 30:
            #     self.moveX = 10
+=======
+
+        #print("D:",d1)
+        #print("X:",self.x)
+        #print("Y:",self.y)
+
+        if self.x <= width - self.w - 5:
+            self.x += self.moveX
+        wdiv = ((width - self.w)/ 5)
+        val = int(round((self.x % wdiv)/5)*5)
+        val = val
+        #valr = int(round(val/5))
+        print("X is:", self.x ,"and Val is:", val)
+        if val == 0 and self.x != 0 and self.x != width - self.w:
+            antal = 0
+            print("--------------------------------------------------------------------------------------------------------------------")
+            while antal < 6:
+                testlist = []
+                testlist.append("done")
+                #print(testlist)
+                antal += 1
+                #print(antal)
+                #break
+
+
+        #    d1 = random.randrange(0,2)
+            #print(d1)
+            
+                
+                #self.y += self.moveY
+>>>>>>> c3224c4e0f22018b99d79175af2b149a9e295ccd
 
     def draw(self):
         window.blit(nme, (self.x, self.y))
@@ -337,7 +396,7 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet, nme_s
             #nme_game.y = random.randrange(0, 1)
             global score
             score += 1
-            print(score)
+            #print(score)
         elif bullet.y > height:
             char_game_bullet.remove(bullet)
     for bullet in nme_game_bullet:
@@ -453,6 +512,19 @@ def main():
 pygame.QUIT
 
 #if __name__ == "__main__":
+
+#    def move(self):
+#
+#        #print("D:",d1)
+#        #print("X:",self.x)
+#        #print("Y:",self.y)
+#
+#        wdiv = int((width - self.w)/ 5)
+#        val = self.x % wdiv
+#        if self.x >= 0 and self.x <= wdiv:
+#            self.x += self.moveX
+#        if self.x >= wdiv and self.x <= wdiv * 2:
+#            self.x += self.moveX
 
 main()
 
