@@ -24,7 +24,6 @@ blue = (0, 0, 255)
 nme_n = 1
 lives = 3
 bullet_delay = 350
-#bullet_delay15 = 100
 nme_game_bullet = USEREVENT + 1
 nme_spawner = USEREVENT + 0
 nme_spawn_list = [5]
@@ -95,7 +94,7 @@ char_img = pygame.image.load(os.path.join('img', 'ship.png'))
 char = pygame.transform.scale(char_img, (char_w, char_h))
 
 
-nme_x, nme_y = 100, 100
+nme_x, nme_y = -100, 100
 nme_w, nme_h = 70, 30
 nme_img = pygame.image.load(os.path.join('img', 'enemy_1.png'))
 nme = pygame.transform.scale(nme_img, (nme_w, nme_h))
@@ -108,8 +107,6 @@ char_bullet = pygame.transform.scale(char_bullet_img, (bullet_w, bullet_h))
 nme_bullet_img = pygame.image.load(os.path.join('img', 'nmebullet.png'))
 nme_bullet = pygame.transform.scale(nme_bullet_img, (bullet_w, bullet_h))
 
-
-
 class enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -117,6 +114,7 @@ class enemy(pygame.sprite.Sprite):
         self.y = 150
         self.moveX = 5
         self.moveY = 0
+        self.shoot = 350
 
     def move(self):
             self.x += self.moveX 
@@ -128,6 +126,10 @@ class enemy(pygame.sprite.Sprite):
                 self.moveX = 17
             if score == 60:
                 self.moveX = 20
+            if score == 75:
+                self.moveX = 23
+            if score == 100:
+                self.moveX = 30
 
             if self.y >= 500:
                 self.y = 500
@@ -151,7 +153,6 @@ class enemy(pygame.sprite.Sprite):
                 nme_random_movement_list.pop(0)
             elif self.x >= 1030:
                 self.moveX = self.moveX * -1
-                self.y += self.moveY
             elif self.x <= 880 and nme_random_movement_list[0] == 5:
                 self.moveX = self.moveX
                 nme_random_movement_list.pop(0)
@@ -285,14 +286,43 @@ def powerup(keys_pressed, char_game, char_game_bullet):
         char_game_bullet.append(bullet)
 
 nme_game_bullet_event = USEREVENT + 1
-if score < 10:
-    pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
 
-#elif score >= 15 < 30:
-    #pygame.time.set_timer(nme_game_bullet_event, bullet_delay15)
+#if score < 15:
+ #   enemy_shot_speed = 700
+#elif score >= 15:
+  #  enemy_shot_speed = 100
 
-nme_direction_event = USEREVENT + 4
-pygame.time.set_timer(nme_direction_event, 1)
+#shot speed events
+pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
+
+nme_game_bullet_event15 = USEREVENT + 6
+bullet_delay15 = 320
+pygame.time.set_timer(nme_game_bullet_event15, bullet_delay15)
+
+nme_game_bullet_event30 = USEREVENT + 7
+bullet_delay30 = 290
+pygame.time.set_timer(nme_game_bullet_event30, bullet_delay30)
+
+nme_game_bullet_event45 = USEREVENT + 8
+bullet_delay45 = 260
+pygame.time.set_timer(nme_game_bullet_event45, bullet_delay45)
+
+nme_game_bullet_event60 = USEREVENT + 9
+bullet_delay60 = 230
+pygame.time.set_timer(nme_game_bullet_event60, bullet_delay60)
+
+nme_game_bullet_event75 = USEREVENT + 10
+bullet_delay75 = 200
+pygame.time.set_timer(nme_game_bullet_event75, bullet_delay75)
+
+nme_game_bullet_event100 = USEREVENT + 11
+bullet_delay100 = 180
+pygame.time.set_timer(nme_game_bullet_event100, bullet_delay100)
+
+nme_game_bullet_event115 = USEREVENT + 12
+bullet_delay115 = 150
+pygame.time.set_timer(nme_game_bullet_event115, bullet_delay115)
+
 
 #spawn_event = USEREVENT + 0
 #pygame.time.set_timer(spawn_event, 1000)
@@ -377,6 +407,7 @@ def main():
     nme_game_bullet = []
     nme_spawner = []
     enemies.update()
+    global score
     #game run
     clock = pygame.time.Clock()
     run = True
@@ -391,7 +422,35 @@ def main():
                     bullet = pygame.Rect(char_game.x + char_game.width / 2.2 + 1, char_game.y, 5, 25)
                     char_game_bullet.append(bullet)
             
-            if event.type == nme_game_bullet_event:
+            if event.type == nme_game_bullet_event and score < 15:
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
+                nme_game_bullet.append(bullet)
+            
+            if event.type == nme_game_bullet_event15 and score >= 15 and score < 30:
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
+                nme_game_bullet.append(bullet)
+
+            if event.type == nme_game_bullet_event30 and score >= 30 and score < 45:
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
+                nme_game_bullet.append(bullet)
+
+            if event.type == nme_game_bullet_event45 and score >= 45 and score < 60:
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
+                nme_game_bullet.append(bullet) 
+            
+            if event.type == nme_game_bullet_event60 and score >= 60 and score < 75:
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
+                nme_game_bullet.append(bullet)
+
+            if event.type == nme_game_bullet_event75 and score >= 75 and score < 100:
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
+                nme_game_bullet.append(bullet)
+            
+            if event.type == nme_game_bullet_event100 and score >= 100 and score < 115:
+                bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
+                nme_game_bullet.append(bullet)
+
+            if event.type == nme_game_bullet_event115 and score >= 115:
                 bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
                 nme_game_bullet.append(bullet)
                    
@@ -426,7 +485,7 @@ def main():
         for bullet in char_game_bullet:
             if bullet.colliderect(enemy.hitbox):
                 char_game_bullet.remove(bullet)
-                global score
+                
                 score += 1
         
         if lives < 0:
@@ -436,10 +495,7 @@ def main():
             text_surface = font.render(GAMEOVER, True, GAMEOVERTXTCOLOR)
             text_rect = text_surface.get_rect()
             text_rect.center = CENTERSCREENPOS
-            #score_end = font.render("Your score: " + str(score), True, (0, 0, 0))
-            #score_end.center = center_score     #?????
             window.blit(text_surface, text_rect)
-            #window.blit(score_end,(500, 400))
             pygame.display.update()
             pygame.time.wait(5000)
 
@@ -456,6 +512,7 @@ def main():
         score_display()
         lives_display()
         display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
+        bullet_delay_score(score, bullet_delay)
 
         #nme_movement(nme_game)
        # nme_spawn()
