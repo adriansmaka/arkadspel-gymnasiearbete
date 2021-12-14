@@ -30,10 +30,9 @@ nme_spawn_list = [5]
 nme_amount = 20
 nme_random_movement_list = []
 shuffled_list = []
-jump_amount = 800
+jump_amount = 900
 for i in range(jump_amount):
     nme_random_movement_list.append(random.randint(1,8))
-print(nme_random_movement_list)
 
 GAMEOVER = "Game Over"
 FONTNAME = 'freesansbold.ttf'
@@ -107,6 +106,7 @@ char_bullet = pygame.transform.scale(char_bullet_img, (bullet_w, bullet_h))
 nme_bullet_img = pygame.image.load(os.path.join('img', 'nmebullet.png'))
 nme_bullet = pygame.transform.scale(nme_bullet_img, (bullet_w, bullet_h))
 
+#Everything enemy
 class enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -175,7 +175,7 @@ class enemy(pygame.sprite.Sprite):
     def draw(self):
         window.blit(nme, (self.x, self.y))
         self.hitbox = (self.x, self.y, 70, 30)
-        pygame.draw.rect(window, (255, 0, 0), self.hitbox, 2)
+        #pygame.draw.rect(window, (255, 0, 0), self.hitbox, 2)
 
 enemies = pygame.sprite.Group()
 
@@ -273,6 +273,10 @@ def char_movement(keys_pressed, char_game, nme_game_bullet, nme_game):
         if char_game.y < char_border_h:
             char_game.y = char_border_h
         
+        if keys_pressed[pygame.K_l]:
+            pygame.draw.rect(window, (255, 0, 0), char_game, 2)
+            
+
        # if nme_game.x == 768:
        #     nme_movement_ph == 1
        # if nme_game.x == 0:
@@ -368,10 +372,6 @@ pygame.time.set_timer(nme_game_bullet_event115, bullet_delay115)
    # for i in range(nme_amount):
      #   nme_img.append(pygame.image.load('enemy_1.png'))
 
-def bullet_delay_score(score, bullet_delay):
-    if score >= 10:
-        bullet_delay == 10
-
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
     for bullet in char_game_bullet:
         bullet.y -= bullet_velocity
@@ -379,9 +379,9 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
             char_game_bullet.remove(bullet)
             #nme_game.x = random.randrange(0, 1)
             #nme_game.y = random.randrange(0, 1)
-            global score
-            score += 1
-            print(score)
+            #global score
+            #score += 1
+            #print(score)
         elif bullet.y > height:
             char_game_bullet.remove(bullet)
     for bullet in nme_game_bullet:
@@ -512,7 +512,6 @@ def main():
         score_display()
         lives_display()
         display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
-        bullet_delay_score(score, bullet_delay)
 
         #nme_movement(nme_game)
        # nme_spawn()
