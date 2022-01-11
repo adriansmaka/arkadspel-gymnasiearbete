@@ -5,7 +5,7 @@ from pygame import font
 import random
 from pygame import draw
 from pygame import sprite
-from pygame.constants import JOYAXISMOTION, K_ESCAPE, KEYDOWN, USEREVENT, K_e
+from pygame.constants import K_ESCAPE, KEYDOWN, USEREVENT, K_e
 from pygame.sprite import Sprite, collide_mask
 from pygame import mixer
 
@@ -35,16 +35,11 @@ jump_amount = 900
 for i in range(jump_amount):
     nme_random_movement_list.append(random.randint(1,8))
 
-#Initialize controller
-joysticks = []
-for i in range(pygame.joystick.get_count()):
-    joysticks.append(pygame.joystick.Joystick(i))
-for joystick in joysticks:
-    joystick.init()
-
-
 #sounds (Mixkit.com)
 mixer.music.load(os.path.join('sounds', 'diff_increase_sound.wav'))
+#mixer.music.play()
+
+#diff_increase = pygame.mixer.Sound('diff_increase_sound.wav')
 
 GAMEOVER = "Game Over"
 FONTNAME = 'freesansbold.ttf'
@@ -56,6 +51,18 @@ center_score = (550, 400)
 bg = pygame.image.load(os.path.join('img', 'resizedImage.png')).convert_alpha()
 bg_scaled = pygame.transform.scale(bg, (width, height))
 
+#nme_movement_ph = random.randint(1, 2)
+#print(nme_movement_ph)
+
+
+#nme_movement_event = USEREVENT + 3
+#test = pygame.time.set_timer(nme_movement_event, 1)
+#print(nme_movement_ph)
+
+
+#def nmes_spawn(nme_game):
+ #   nme_spawn_list.append(nme_game)
+
 #score display
 score = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -63,6 +70,12 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 def score_display():
     score_game = font.render("Score: " + str(score), True, (0, 0, 0))
     window.blit(score_game, (950, 700))
+
+#def score_end_display():
+   # score_end = font.render("Your score: " + str(score), True, (0, 0, 0))
+   # window.blit(score_end,(500, 400))
+
+
 
 char_border_h = int(height * 0.4)
 
@@ -76,6 +89,9 @@ def lives_display():
 
 # x-kord, y-kord, width, height
 wall = pygame.Rect(0, char_border_h, width, height)
+
+#movement switchers
+#movement_switch1 = pygame.Rect(192, char_border_h, width, height)!!!!!!!!
 
 #char_lives = 3
 char_w, char_h = 64, 64
@@ -157,10 +173,16 @@ class enemy(pygame.sprite.Sprite):
                 self.moveX = self.moveX
                 nme_random_movement_list.pop(0)
 
+           # if score > 15:
+           #     self.moveX = 7
+           # if score > 30:
+           #     self.moveX = 1
+
 
     def draw(self):
         window.blit(nme, (self.x, self.y))
         self.hitbox = (self.x, self.y, 70, 30)
+        #pygame.draw.rect(window, (255, 0, 0), self.hitbox, 2)
 
 enemies = pygame.sprite.Group()
 
@@ -215,6 +237,17 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
     window.blit(bg_scaled, (0,0))
     window.blit(char, (char_game.x, char_game.y))
     window.blit(nme, (nme_game.x, nme_game.y))
+    #window.blit(nmes, (nmes.x, nmes.y))
+    #spawn = window.blit(nme, (nme_game.x, nme_game.y))
+    #spawn = window.blit(nme, (nme_game.x, nme_game.y))
+    #spawn_event = USEREVENT + 3
+    #pygame.time.set_timer(spawn_event, 2000)
+    #for i in range(nme_amount):
+     #   if event.type == spawn_event:
+        
+    
+        
+    #display_triangle()
 
     for bullets in char_game_bullet:
         pygame.draw.rect(window, blue, bullets)
@@ -222,6 +255,10 @@ def display_window(char_game, nme_game, char_game_bullet, nme_game_bullet):
     for bullets in nme_game_bullet:
         pygame.draw.rect(window, red, bullets)
 
+
+#def spawn(nme_game):
+    #spawn = window.blit(nme, (nme_game.x, nme_game.y))
+    #return spawn
 
 def char_movement(keys_pressed, char_game, nme_game_bullet, nme_game):
     #char movement
@@ -247,12 +284,24 @@ def char_movement(keys_pressed, char_game, nme_game_bullet, nme_game):
             pygame.draw.rect(window, (255, 0, 0), char_game, 2)
             
 
+       # if nme_game.x == 768:
+       #     nme_movement_ph == 1
+       # if nme_game.x == 0:
+       #     nme_movement_ph == 2
+
+
+
 def powerup(keys_pressed, char_game, char_game_bullet):     
     if keys_pressed[pygame.K_p]:
         bullet = pygame.Rect(char_game.x + char_game.width / 2.2 + 1, char_game.y, 5, 25)
         char_game_bullet.append(bullet)
 
 nme_game_bullet_event = USEREVENT + 1
+
+#if score < 15:
+ #   enemy_shot_speed = 700
+#elif score >= 15:
+  #  enemy_shot_speed = 100
 
 #shot speed events
 pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
@@ -286,6 +335,50 @@ bullet_delay115 = 150
 pygame.time.set_timer(nme_game_bullet_event115, bullet_delay115)
 
 
+#spawn_event = USEREVENT + 0
+#pygame.time.set_timer(spawn_event, 1000)
+
+#def nme_movement(nme_game):
+ #   nme_v = 10
+  #  if nme_game.y < nme_border_h:
+   #     clears = 0
+    #    while clears == 0:
+     #       n = 0
+
+#----------- Height update -----------
+
+      #      while n < 6:
+       #         n = nme_game.y / nme_h
+        #        break
+
+#----------- X axis movement -----------
+
+         #   if nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 <= 0:
+          #      nme_game.x += nme_v
+
+           # elif nme_game.x >= 0 and nme_game.x <= width - nme_w and n % 2 == 1:
+            #    nme_game.x -= nme_v
+
+#----------- Y axis movement -----------
+
+            #if nme_game.x == width - nme_w and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
+             #   nme_game.y += nme_v
+
+            #elif nme_game.x == 0 and nme_game.y >= nme_h * n and nme_game.y <= nme_h * n + nme_h:
+             #   nme_game.y += nme_v
+
+            #break
+
+    #else:
+     #   if nme_game.x >= 0 and nme_game.x <= width - nme_w:
+      #      nme_game.x += nme_v
+       # else:
+#            nme_v = nme_v * -1
+
+#def nme_spawn():
+   # for i in range(nme_amount):
+     #   nme_img.append(pygame.image.load('enemy_1.png'))
+
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
     for bullet in char_game_bullet:
         bullet.y -= bullet_velocity
@@ -299,6 +392,12 @@ def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
             nme_game_bullet.remove(bullet)
             global lives
             lives -= 1
+
+    
+    #if nmes.colliderect(bullet):
+     #   char_game_bullet.remove(bullet)
+    
+#def nmes_physics(nmes, char_game_bullet):
     
 
 def main():
@@ -325,13 +424,6 @@ def main():
                     bullet = pygame.Rect(char_game.x + char_game.width / 2.2 + 1, char_game.y, 5, 25)
                     char_game_bullet.append(bullet)
             
-            if event.type == pygame.JOYBUTTONDOWN:
-                bullet = pygame.Rect(char_game.x + char_game.width / 2.2 + 1, char_game.y, 5, 25)
-                char_game_bullet.append(bullet)
-
-            #if event.type == JOYAXISMOTION:
-
-
             if event.type == nme_game_bullet_event and score < 15:
                 bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
                 nme_game_bullet.append(bullet)
@@ -385,6 +477,25 @@ def main():
                 bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
                 nme_game_bullet.append(bullet)
                    
+            #  if event.type == enemy_spawn_event:
+                #enemy_spawn()  #???????
+                
+           # if event.type == spawn_event:            
+             #   nme_spawner.append(nmes)
+         
+            #if event.type == nme_direction_event:
+             #   if nme_game.x == 0:
+              #      nme_movement_ph = 2
+               # elif nme_game.x == 769:
+                #    nme_movement_ph = 1
+                    
+            #if event.type == nme_movement_event:
+              #  if nme_movement_ph == 1:
+              #      nme_game.x -= 1
+              #  elif nme_movement_ph == 2:
+              #       nme_game.x += 1    
+
+            #WORK IN PROGRESS. NOT DONE, MAINMENU / SCORESCREEN!!!
             if lives < 0:
                run = False
 
@@ -410,6 +521,11 @@ def main():
             window.blit(text_surface, text_rect)
             pygame.display.update()
             pygame.time.wait(5000)
+
+        #if score == 10:
+        
+
+        #window.blit(bg_scaled, (0,0))
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
