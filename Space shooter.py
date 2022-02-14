@@ -420,6 +420,9 @@ def main():
         lives_display()
         display_window(char_game, nme_game, char_game_bullet, nme_game_bullet)
 
+        if keys_pressed[pygame.K_ESCAPE]:
+            run = False
+
 pygame.QUIT
 
 #if __name__ == "__main__":
