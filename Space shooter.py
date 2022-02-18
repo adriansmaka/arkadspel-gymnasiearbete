@@ -11,7 +11,7 @@ from pygame import mixer
 
 pygame.init()
 #width, height = 1280, 960
-width, height = 1100, 740
+width, height = 1366, 768
 window = pygame.display.set_mode((width, height))
 #useful assets
 fps = 60
@@ -49,7 +49,7 @@ mixer.music.load(os.path.join('sounds', 'diff_increase_sound.wav'))
 GAMEOVER = "Game Over"
 FONTNAME = 'freesansbold.ttf'
 GAMEOVERTXTCOLOR = (150, 150, 150)
-CENTERSCREENPOS = (550, 250)
+CENTERSCREENPOS = (width / 2 , height / 2)
 center_score = (550, 400)
 
 
@@ -127,33 +127,37 @@ class enemy(pygame.sprite.Sprite):
                 self.moveY = 0
                 self.moveX = 0
 
+
+            frac = width / 5
             if self.x <= 0:
                 self.moveX = self.moveX * -1
                 self.y += self.moveY
-            elif self.x >= 220 and nme_random_movement_list[0] == 1:
+            elif self.x >= frac and nme_random_movement_list[0] == 1:
                 self.moveX = self.moveX * -1
                 nme_random_movement_list.pop(0)
-            elif self.x >= 440 and nme_random_movement_list[0] == 2:
+            elif self.x >= frac * 2 and nme_random_movement_list[0] == 2:
                 self.moveX = self.moveX * -1
                 nme_random_movement_list.pop(0)
-            elif self.x >= 660 and nme_random_movement_list[0] == 3:
+            elif self.x >= frac * 3 and nme_random_movement_list[0] == 3:
                 self.moveX = self.moveX * -1
                 nme_random_movement_list.pop(0)
-            elif self.x >= 880 and nme_random_movement_list[0] == 4:
+            elif self.x >= frac * 4 and nme_random_movement_list[0] == 4:
                 self.moveX = self.moveX * -1
                 nme_random_movement_list.pop(0)
-            elif self.x > 1030:
+            elif self.x > frac * 5 and nme_random_movement_list[0] == 5:
                 self.moveX = self.moveX * -1
-            elif self.x <= 880 and nme_random_movement_list[0] == 5:
+            elif self.x >= width - nme_w:
+                self.moveX = self.moveX * -1
+            elif self.x <= frac * 4 and nme_random_movement_list[0] == 6:
                 self.moveX = self.moveX
                 nme_random_movement_list.pop(0)
-            elif self.x <= 660 and nme_random_movement_list[0] == 6:
+            elif self.x <= frac * 3 and nme_random_movement_list[0] == 7:
                 self.moveX = self.moveX
                 nme_random_movement_list.pop(0)
-            elif self.x <= 440 and nme_random_movement_list[0] == 7:
+            elif self.x <= frac * 2 and nme_random_movement_list[0] == 8:
                 self.moveX = self.moveX
                 nme_random_movement_list.pop(0)
-            elif self.x <= 220 and nme_random_movement_list[0] == 8:
+            elif self.x <= frac and nme_random_movement_list[0] == 9:
                 self.moveX = self.moveX
                 nme_random_movement_list.pop(0)
 
@@ -258,41 +262,43 @@ nme_game_bullet_event = USEREVENT + 1
 pygame.time.set_timer(nme_game_bullet_event, bullet_delay)
 
 nme_game_bullet_event15 = USEREVENT + 6
-bullet_delay15 = 320
+bullet_delay15 = 300
 pygame.time.set_timer(nme_game_bullet_event15, bullet_delay15)
 
 nme_game_bullet_event30 = USEREVENT + 7
-bullet_delay30 = 290
+bullet_delay30 = 250
 pygame.time.set_timer(nme_game_bullet_event30, bullet_delay30)
 
 nme_game_bullet_event45 = USEREVENT + 8
-bullet_delay45 = 260
+bullet_delay45 = 200
 pygame.time.set_timer(nme_game_bullet_event45, bullet_delay45)
 
 nme_game_bullet_event60 = USEREVENT + 9
-bullet_delay60 = 230
+bullet_delay60 = 150
 pygame.time.set_timer(nme_game_bullet_event60, bullet_delay60)
 
 nme_game_bullet_event75 = USEREVENT + 10
-bullet_delay75 = 200
+bullet_delay75 = 100
 pygame.time.set_timer(nme_game_bullet_event75, bullet_delay75)
 
 nme_game_bullet_event100 = USEREVENT + 11
-bullet_delay100 = 180
+bullet_delay100 = 75
 pygame.time.set_timer(nme_game_bullet_event100, bullet_delay100)
 
 nme_game_bullet_event115 = USEREVENT + 12
-bullet_delay115 = 150
+bullet_delay115 = 50
 pygame.time.set_timer(nme_game_bullet_event115, bullet_delay115)
 
 
 def bullet_physics(char_game_bullet, char_game, nme_game, nme_game_bullet):
+    #Bullet physics for main character.
     for bullet in char_game_bullet:
         bullet.y -= bullet_velocity
         if nme_game.colliderect(bullet):
             char_game_bullet.remove(bullet)
         elif bullet.y > height:
             char_game_bullet.remove(bullet)
+    #Bullet physics for enemy.
     for bullet in nme_game_bullet:
         bullet.y += bullet_velocity
         if char_game.colliderect(bullet):
@@ -385,8 +391,8 @@ def main():
                 bullet = pygame.Rect(enemy.x + nme_game.width / 2.2 + 1, enemy.y, 5, 25)
                 nme_game_bullet.append(bullet)
                    
-            if lives < 0:
-               run = False
+            #if lives < 0:
+               #run = False
 
         for enemy in enemy_list:
             enemy.move()
@@ -400,8 +406,8 @@ def main():
                 
                 score += 1
         
-        if lives < 0:
-            print("End")
+        if lives <= 0:
+            #print("End")
             window.fill(black)
             font = pygame.font.Font(FONTNAME, 30)
             text_surface = font.render(GAMEOVER, True, GAMEOVERTXTCOLOR)
@@ -409,7 +415,8 @@ def main():
             text_rect.center = CENTERSCREENPOS
             window.blit(text_surface, text_rect)
             pygame.display.update()
-            pygame.time.wait(5000)
+            pygame.time.wait(3000)
+            run = False
 
         #char movement
         keys_pressed = pygame.key.get_pressed()
